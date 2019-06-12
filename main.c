@@ -23,16 +23,17 @@ YYYY-MM-DD  Checksum  Comments
 
 ************************************************************************/
 
+#include "small_car-efwd-01.h"
 #include "io430.h"
 #include "typedef_MSP430.h"
 #include "intrinsics.h"
-#include "small_car-efwd-01.h"
 #include "main.h"
+
 
 
 /************************ External Program Globals ****************************/
 /* Globally available variables from other files as indicated */
-extern fnCode_type CounterStateMachine;                 /* From blink-efwd-01.c */
+extern fnCode_type CarStateMachine;                 /* From blink-efwd-01.c */
 extern fnCode_type G_fCurrentStateMachine;            /* From blink-efwd-01.c */
 extern fnCode_type G_pfPatterns[];                    /* From blink-efwd-01.c */
  

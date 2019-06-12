@@ -9,8 +9,8 @@ YYYY-MM-DD  Comments
 
 ************************************************************************/
 
-#ifndef __CAR_HEADER
-#define __CAR_HEADER
+#ifndef __CAR_CONTROL_HEADER
+#define __CAR_CONTROL_HEADER
 
 #include "typedef_MSP430.h"
 
@@ -30,7 +30,6 @@ typedef struct
 Constants
 ****************************************************************************************/
 
-#define SPEED_OF_THE_CAR_METRES_PER_SECOND (u8)5
 
 /************************ Function Declarations ****************************/
 

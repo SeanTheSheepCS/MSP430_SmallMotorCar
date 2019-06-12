@@ -11,12 +11,13 @@ YYYY-MM-DD  Comments
 
 ************************************************************************/
 
+#include "small_car-efwd-01.h"
 #include "io430.h"
 #include "typedef_MSP430.h"
 #include "intrinsics.h"
 #include "leds.h"
-#include "car_control.h"
-#include "small_car-efwd-01.h"
+#include "motor_control.h"
+#include "recievers.h"
 
 /******************** External Globals ************************/
 /* Globally available variables from other files as indicated */
@@ -41,8 +42,8 @@ LedInformation LG_aLedInfoScoreLeds[NUMBER_OF_LEDS] = {{(u16*)0x0029, P2_2_CENTE
                                                        {(u16*)0x0019, P3_1_CENTER_LED_BLUE_INPUT},
                                                        {(u16*)0x0019, P3_2_HEADLIGHTS_LEDS}};
 
-MotorPinInformation LG_aMPinInfoScoreLeds[NUMBER_OF_MPINS] = {{(u16*)0x0029, P2_4_LEFT_MOTOR_NEG_INPUT, (u16*)0x0021, P1_0_LEFT_MOTOR_POS_INPUT},
-                                                              {(u16*)0x0021, P1_1_RIGHT_MOTOR_NEG_INPUT, (u16*)0x0021, P1_2_RIGHT_MOTOR_POS_INPUT}};
+MotorInformation LG_aMPinInfoScoreLeds[NUMBER_OF_MPINS] = {{(u16*)0x0029, P2_4_LEFT_MOTOR_NEG_INPUT, (u16*)0x0021, P1_0_LEFT_MOTOR_POS_INPUT},
+                                                           {(u16*)0x0021, P1_1_RIGHT_MOTOR_NEG_INPUT, (u16*)0x0021, P1_2_RIGHT_MOTOR_POS_INPUT}};
 
 /******************** Function Definitions ************************/
  
@@ -110,18 +111,7 @@ void CarSM_Idle()
 {
   while(1)
   {
-    if(hasRecieverDetectedAWall())
-    {
-      
-    }
-    else if(hasRecieverDetectedAWall())
-    {
-      
-    }
-    else if(hasRecieverDetectedAWall())
-    {
-      
-    }
+    //
   }
 } /* end CarSM_Idle() */
 

@@ -11,8 +11,8 @@ YYYY-MM-DD  Comments
 
 ************************************************************************/
 
-#ifndef __CAR_HEADER
-#define __CAR_HEADER
+#ifndef __SMALL_CAR_HEADER
+#define __SMALL_CAR_HEADER
 
 /****************************************************************************************
 Constants
@@ -94,16 +94,12 @@ Hardware Definitions
 
 
 /************************ Function Declarations ****************************/
-void CarSM_Initialize();
-void CarSM_LeftRecieverSignalActive();
-void CarSM_RightRecieverSignalActive();
-void CarSM_CenterRecieverSignalActive();
 
 /****************************************************************************************
 State Machine Functions
 ****************************************************************************************/
-void CarSM_Idle();                     /* The state the counter enters if nothing of note has recently happened */
-
-void CarSM_Sleep();                    /* Determines which mode of sleep to enter and sleep */
+void CarSM_Idle(void);                     /* The state the counter enters if nothing of note has recently happened */
+void CarSM_Initialize(void);
+void CarSM_Sleep(void);                    /* Determines which mode of sleep to enter and sleep */
 
 #endif /* __CAR_HEADER */
