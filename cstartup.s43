@@ -1,0 +1,352 @@
+/***************************************************************************
+ *
+ * System initialization code for the MSP430 IAR C/EC++ Compiler.
+ *
+ * Copyright 2002-2007 IAR Systems. All rights reserved.
+ *
+ * $Revision: 1.25 $
+ *
+ ***************************************************************************/
+
+/************************ Revision History ****************************
+YYYY-MM-DD  Comments
+-------------------------------------------------------------------------------------------
+2013-11-21  Complete port from ANT Key Fob firmware (again)
+
+************************************************************************/
+
+;*********************************************************************
+; Firmware version (value is added to info memory below)
+#define VERSION 1
+;*********************************************************************
+
+; There are two libraries provided with compilers from IAR Systems,
+; CLib and DLib.  This file is designed to work with both libraries.
+; Some parts of it is DLib-specific.  However, those parts will not
+; be included when building an appplication using CLib.
+
+#include "macros.m43"
+#include "cfi.m43"
+#include <msp430x21x2.h>
+#include <io430x21x2.h>
+
+    XCFI_NAMES libNames
+    XCFI_COMMON libCommon, libNames
+
+; ---------------------------------------------------------
+; Define reset vector.
+
+    MODULE  ?reset_vector
+
+    RSEG    RESET:CONST:NOROOT(1)
+    PUBLIC  ?reset_vector
+    EXTERN  __program_start
+
+?reset_vector:
+    DC16    __program_start
+
+    ENDMOD
+
+
+; ---------------------------------------------------------
+; Define NMI vector.
+
+    MODULE  ?nmi_vector
+
+    RSEG    NMI:CONST:NOROOT(1)
+    PUBLIC  ?nmi_vector
+    EXTERN  __program_start
+
+?nmi_vector:
+    DC16    __program_start
+
+    ENDMOD
+
+; ---------------------------------------------------------
+; The cstartup code -- perform initialization, call __low_level_init, 
+; and call main.  If main returns the exit system is started.
+
+    MODULE  ?cstart
+
+; Ensure that this is built with the same "position independent
+; code" settings as the compiler uses.
+
+    XPICRTMODEL
+
+; Forward declarations of segments.
+
+    RSEG    HEAP:DATA:NOROOT(1)
+    RSEG    CSTACK:DATA:NOROOT
+
+    RSEG    DATA16_Z:DATA:NOROOT
+    RSEG    DATA16_I:DATA:NOROOT
+    RSEG    DATA16_ID:DATA:NOROOT
+
+		RSEG	DEVICE_INFO_SEGC:CONST:ROOT
+
+firmware_version
+  DC16  VERSION
+
+/*
+; Calibration values in case you happen to erase them...  No guarantees that they will
+; match the ones you killed -- they were taken from an MSP430F2011.
+; Requires uncommenting of the CAL_VALUES segment code in lnk430F2122_KEYFB.xcl
+
+			RSEG	CAL_VALUES:CONST:ROOT
+
+	DC16	0xffff, 0x8aba
+	DC16	0x8f80, 0x8e87
+	DC8		0x7e, 0x8d
+	DC8		0xc2, 0x86
+*/
+
+; ---------------------------------------------------------
+; System initialization.
+
+    RSEG CSTART:CODE:NOROOT(1)
+    PUBLIC  __program_start
+
+		EXTERN  ?reset_vector
+    REQUIRE ?reset_vector
+    REQUIRE	?cstart_call_low_level_init
+    REQUIRE ?cstart_call_main
+ 
+__program_start:
+
+    PUBLIC ?cstart_begin
+?cstart_begin:
+
+    MOV     #WDTPW + WDTHOLD, &WDTCTL_  ; Turn off the watchdog
+	  MOV     #SFE(CSTACK), SP            ; Initialize SP to point to the top of the stack.
+
+; -----------------------------------------------
+; Segment initialization:
+;
+; xxx_Z  -- uninitialized data that are filled with zeros.
+; xxx_I  -- initialized data that gets the values from the corresponding
+;           xxx_ID segment.
+
+
+#ifndef IGNORE_SEG_INIT
+#ifndef IGNORE_DATA16_DATA
+
+
+; Clear DATA16_Z.
+
+     RSEG CSTART:CODE:NOROOT(1)
+     PUBLIC  ?cstart_init_zero
+     EXTERN  __data16_memzero
+
+?cstart_init_zero:
+     MOV     #SFB DATA16_Z,    CW0
+     MOV     #sizeof DATA16_Z, CW1
+
+     XCALL   #__data16_memzero
+
+
+; Copy DATA16_ID to DATA16_I
+
+     RSEG CSTART:CODE:NOROOT(1)
+     PUBLIC  ?cstart_init_copy
+     EXTERN  __data16_memcpy
+
+?cstart_init_copy:
+     MOV     #SFB DATA16_I,  CW0
+     MOV     #SFB DATA16_ID, CW1
+
+#if CALLING_CONVENTION == 1
+     PUSH.W  #sizeof DATA16_I
+     XCALL   #__data16_memcpy
+     ADD     #2, SP
+
+#else
+     MOV     #sizeof DATA16_I, CW2
+
+     XCALL   #__data16_memcpy
+#endif ; CALLING_CONVENTION
+
+#endif ; IGNORE_DATA16_DATA
+
+
+; -----------------------------------------------
+; Call __low_level_init to perform initialization before initializing
+; segments and calling main. If the function returns 0 no segment
+; initialization should take place.
+
+
+    RSEG CSTART:CODE:NOROOT(1)
+    PUBLIC  ?cstart_call_low_level_init
+    EXTERN  __low_level_init
+  
+
+?cstart_call_low_level_init:
+     XCALL   #__low_level_init
+
+; -----------------------------------------------
+; Call main() with no arguments and then exit using the return value
+; of main as the parameter.
+
+     RSEG CSTART:CODE:NOROOT(1)
+     PUBLIC  ?cstart_call_main
+
+     EXTERN  main
+     EXTERN  exit
+
+?cstart_call_main:
+     XCALL   #main
+     XCALL   #exit
+
+     PUBLIC  ?cstart_end
+?cstart_end:
+
+     ENDMOD  __program_start
+
+
+; ---------------------------------------------------------
+; __low_level_init
+;
+; This function sets up the I/O, processor clock, Timer A, the flash timer, adc,
+; spi and interrupts.  It also determines if the cstartup code should initialize 
+; values in the the data segments by return 0 to the caller.
+;
+; Requires:
+;	- 
+;
+; Promises:
+;	- GPIOs are configured per the LedBlinker schematics
+;  - The internal RC is set as the main clock source
+;  - The flash timer is set to use the DCO clock with the proper division
+;  - ADC is configured to read the battery voltage
+;  - The SPI module is configured to communicate with the ANT module
+;  - The system interrupts are set, though interrupts are not enabled yet except for NMIs
+; 	- Returns 0 in W0 (R12 as defined in macros.m43) to skip initialization
+;	  of the data segments (change this to 1 to enable data seg. init)
+;      - clk_error_bit is set if the 32kHz clock does not start properly
+
+    MODULE  lowinit
+    PUBLIC  __low_level_init
+    RSEG    CODE:CODE:NOROOT(1)
+
+__low_level_init:	
+; For maximum power savings, the device runs off the built in low power 12kHz oscillator, VLOCLK.
+; If serial communication is required, the clock is switched to the DCO that should
+; provide adequate timing for 9600 baud serial.
+; When everything is up and running:
+;   - MCLK is sourced from VLOCLK with no scaling
+;   - ACLK is sourced from VLOCLK and is the time base for TimerA with no scaling
+;   - SMCLK is not required.
+clock_setup
+;  BIC.W   #OSCOFF, SR 				      ; Turn on LFXT1CLK osc. in status reg
+  MOV.B   #10000111b, &BCSCTL1_     ; <7> [1] XT2 off
+                                    ; <6> [0] LFXT1 in low frequency mode
+                                    ; <5-4> [00] ACLK divider 1:1
+                                    ; <3-0> [0111] default RSEL value for mid frequency range
+  MOV.B	  #11001000b, &BCSCTL2_		  ; <7-6> [11] MCLK is LFXT1CLK or VLOCLK 
+                                    ; <5-4> [00[ MCLK divider is 1:1
+										                ; <3> [1] SMCLK to LFXT1CLK or VLOCLK 
+                                    ; <2-1> [00] SMCLK divider 1:1
+										                ; <0> [0] DCO on internal resistor
+	MOV.B	  #00100000b, &BCSCTL3_		  ; <7-6> [00] Unused XT2 bits
+                                    ; <5-4> [10] LFXT1 is VLOCLK 
+                                    ; <3-2> [00] N/A load caps
+                                    ; <1> [0] XT2 fault flag clear
+                                    ; <0> [0] LFXT fault flag clear
+
+; Switch main clock to LFXT1 and turn off DCO
+  BIS.B	  #11001000b, &BCSCTL2_	      ; MCLK and SMCLK are LFXT1CLK
+	BIS.B	  #SCG0 + SCG1, SR				    ; Turn off DCO and SMCLK
+  NOP                                 ;
+
+gpio_setup
+; Setup I/O per the following:
+;  - P1.0 input BUTTON
+;  - P1.1 output LED5 (active high)
+;  - P1.2 output LED1 (active high)
+;  - P1.3 output LED8 (active high)
+;  - P1.4 JTAG TCK no configuration
+;  - P1.5 JTAG TMS no configuration
+;  - P1.6 JTAG TDI no configuration
+;  - P1.7 JTAG TDO no configuration
+
+;  - P2.0 TP1 / output ACLK
+;  - P2.1 TP2 / output SMCLK
+;  - P2.2 output LED4 (active high)
+;  - P2.3 TP7 output low
+;  - P2.4 TP8 output low
+;  - P2.5 output system tick
+;  - P2.6 TP4 output low
+;  - P2.7 TP3 output low
+
+;  - P3.0 output LED7 (active high)
+;  - P3.1 output LED3 (active high)
+;  - P3.2 output LED6 (active high)
+;  - P3.3 TP5 output low
+;  - P3.4 UART POMI
+;  - P3.5 UART PIMO
+;  - P3.6 output LED2 (active high)
+;  - P3.7 TP6 output low
+
+; Set up GPIO.  For data direction, 0 = input, 1 = output.
+	MOV.B	#00000000b, &P1SEL_		  ; All pins GPIO
+	MOV.B	#00001110b, &P1DIR_		  ; LEDs are outputs
+	MOV.B	#00000000b, &P1OUT_ 	  ; Start with all lights off
+  
+	MOV.B	#00000011b, &P2SEL_		  ; Clock outs on 0 and 1, all else GPIO
+	MOV.B	#11111111b, &P2DIR_		  ; All pins output
+  MOV.B	#00000000b, &P2OUT_ 	  ; Start with all lights off
+  
+	MOV.B	#00110000b, &P3SEL_		  ; Pins 4 and 5 are UART (USCIA)
+	MOV.B	#01000111b, &P3DIR_		  ; 
+	MOV.B	#00000000b, &P3OUT_ 	  ; 
+
+
+; Setup timerA
+timerA_setup
+	MOV.W	#0000000110010000b, &TACTL_	  ; <15-10> [000000] not used
+                                      ; <9-8> [01] ACLK Timer A clock source
+                                      ; <7-6> [10] Input divider /4
+                                      ; <5-4> [01] Up mode
+                                      ; <3> [0] not used
+                                      ; <2> [0] Don't reset the timer
+                                      ; <1> [0] Disable the timer interrupt
+                                      ; <0> [0] Clear the interrupt flag
+  MOV.W #0x1000, &TACCR0_             ;
+  
+
+
+; Setup the UART peripheral.  
+uart_setup
+  MOV.B #00000000b,&UCA0CTL0_         ; <7> [0] Parity disabled
+                                      ; <6> [0] N/A
+                                      ; <5> [0] LSB first
+                                      ; <4> [0] 8-bit data
+                                      ; <3> [0] One stop bit
+                                      ; <2-1> [00] UART Mode
+                                      ; <0> [0] Asynchronous mode
+  MOV.B #01000001b, &UCA0CTL1_        ; <7-6> [01] USCI clock source is ACLK
+                                      ; <5> [0] No Receive erroneous-character interrupt
+                                      ; <4> [0] No Receive break character interrupt
+                                      ; <3> [0] Not dormant
+                                      ; <2> [0] N/A
+                                      ; <1> [0] Next frame transmitted is not a break
+                                      ; <0> [1] USCI in reset
+  MOV.B #0x00, &UCA0BR0_              ; Set low byte of baud rate register                                      
+  MOV.B #0x00, &UCA0BR1_              ; Set high byte of baud rate register                                      
+
+; Setup interrupts.  The active interrupts in this program are:
+;  - Port1.0: Button input.  The interrupt is only enabled during sleep to force wake-up.
+;	   The interrupt should fire on a high-to-low transition of the active-low button.
+;	 - TimerA during sleep -- enabled in main.
+
+interrupt_setup
+  BIC.B #ACCVIFG + OFIFG, &IFG1_      ; Clear NMI flags of interest
+;  BIS.B #ACCVIE + OFIE, &IE1_         ; Enable oscillator fault and memory access interrupts
+  MOV.B	#00000001b, &P1IES_		        ; Set P1.0 (button) interrupts on high-to-low transition
+;	MOV.B	#00000100b, &P2IES_		        ; Set P2.2 (motion) interrupts on high-to-low transition
+  
+low_level_init_end
+	XRET                            
+                                        
+	ENDMOD
+
+	END
