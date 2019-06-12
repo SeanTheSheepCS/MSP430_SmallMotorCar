@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
     <fileVersion>2</fileVersion>
-    <fileChecksum>1060007406</fileChecksum>
+    <fileChecksum>912958919</fileChecksum>
     <configuration>
         <name>Debug</name>
         <outputs>
@@ -57,10 +57,25 @@
             <file>$PROJ_DIR$\Debug\Obj\posts.r43</file>
             <file>$PROJ_DIR$\..\posts.c</file>
             <file>$PROJ_DIR$\Debug\Obj\posts.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\car_control.r43</file>
+            <file>$PROJ_DIR$\Debug\Obj\car_control.pbi</file>
+            <file>$PROJ_DIR$\Debug\List\small_car-efwd-01.lst</file>
+            <file>$PROJ_DIR$\Debug\List\car_control.lst</file>
+            <file>$PROJ_DIR$\..\car_control.c</file>
+            <file>$PROJ_DIR$\..\car_control.h</file>
+            <file>$PROJ_DIR$\..\recievers.c</file>
+            <file>$PROJ_DIR$\Debug\Obj\recievers.pbi</file>
+            <file>$PROJ_DIR$\..\recievers.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\recievers.r43</file>
+            <file>$PROJ_DIR$\Debug\List\recievers.lst</file>
         </outputs>
         <file>
             <name>$PROJ_DIR$\..\small_car-efwd-01.c</name>
             <outputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 54</file>
+                </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 3</file>
@@ -69,11 +84,11 @@
             <inputs>
                 <tool>
                     <name>ICC430</name>
-                    <file> 21 26 5 12</file>
+                    <file> 21 26 5 12 44 57 1</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 5 26 21 12 34 44</file>
+                    <file> 5 26 21 12 44 57 1</file>
                 </tool>
             </inputs>
         </file>
@@ -225,11 +240,11 @@
             <inputs>
                 <tool>
                     <name>ICC430</name>
-                    <file> 21 26 5 12 34 48</file>
+                    <file> 21 26 5 12 1 34</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 1 26 5 12 34 21</file>
+                    <file> 34 5 12 1 26 21</file>
                 </tool>
             </inputs>
         </file>
@@ -277,6 +292,52 @@
                     <file> 35</file>
                 </tool>
             </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\car_control.c</name>
+            <outputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 55</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 53</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 26 5 12 57</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 5 26 12 57</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\recievers.c</name>
+            <outputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 62 61</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 59</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 60 12</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 60 12</file>
+                </tool>
+            </inputs>
         </file>
         <forcedrebuild>
             <name>[MULTI_TOOL]</name>

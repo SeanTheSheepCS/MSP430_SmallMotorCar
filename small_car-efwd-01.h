@@ -7,7 +7,7 @@ YYYY-MM-DD  Comments
 -------------------------------------------------------------------------------------------
 2013-11-21  Port from ANT key fob.
 2019-06-05  Binary counter scoreboard first attempt
-2019-06-11  Small motor car first attempt
+2019-06-12  Small motor car first attempt
 
 ************************************************************************/
 
@@ -19,6 +19,7 @@ Constants
 ****************************************************************************************/
 
 #define NUMBER_OF_LEDS      (u8)5
+#define NUMBER_OF_MPINS     (u8)4
 
 /* Timing constants */
 #define TIME_1MS            (u16)3     /* Taccro used to kill roughly 1ms */
@@ -94,6 +95,9 @@ Hardware Definitions
 
 /************************ Function Declarations ****************************/
 void CarSM_Initialize();
+void CarSM_LeftRecieverSignalActive();
+void CarSM_RightRecieverSignalActive();
+void CarSM_CenterRecieverSignalActive();
 
 /****************************************************************************************
 State Machine Functions
