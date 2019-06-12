@@ -2298,12 +2298,6 @@
         </settings>
     </configuration>
     <file>
-        <name>$PROJ_DIR$\..\binary_counter-efwd-01.c</name>
-    </file>
-    <file>
-        <name>$PROJ_DIR$\..\binary_counter-efwd-01.h</name>
-    </file>
-    <file>
         <name>$PROJ_DIR$\..\cstartup.s43</name>
     </file>
     <file>
@@ -2323,6 +2317,12 @@
     </file>
     <file>
         <name>$PROJ_DIR$\..\msp430x21x2.h</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\..\small_car-efwd-01.c</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\..\small_car-efwd-01.h</name>
     </file>
     <file>
         <name>$PROJ_DIR$\..\typedef_MSP430.h</name>

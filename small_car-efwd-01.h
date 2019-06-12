@@ -1,20 +1,25 @@
 /**********************************************************************
-* Header file for LED Blinker
+* Header file for Small Motor Car
 **********************************************************************/
 
 /************************ Revision History ****************************
 YYYY-MM-DD  Comments
 -------------------------------------------------------------------------------------------
 2013-11-21  Port from ANT key fob.
+2019-06-05  Binary counter scoreboard first attempt
+2019-06-11  Small motor car first attempt
 
 ************************************************************************/
 
-#ifndef __BLINK_HEADER
-#define __BLINK_HEADER
+#ifndef __CAR_HEADER
+#define __CAR_HEADER
 
 /****************************************************************************************
 Constants
 ****************************************************************************************/
+
+#define NUMBER_OF_LEDS      (u8)5
+
 /* Timing constants */
 #define TIME_1MS            (u16)3     /* Taccro used to kill roughly 1ms */
 #define TIME_10MS           (u16)30    /* Taccro used to kill roughly 10ms */
@@ -27,43 +32,39 @@ Constants
 #define TIME_7S             (u16)20832 /* Taccro for 7 second period */
 #define TIME_MAX            (u16)65535 /* Taccro for max second period */
 
-#define TOTAL_LEDS          (u8)8
-#define TOTAL_PATTERNS      (u8)4
-
-
 /****************************************************************************************
 Hardware Definitions
 ****************************************************************************************/
 /* Port 1 pins */
-#define P1_0_BUTTON              0x01
-#define P1_1_LED5                0x02
-#define P1_2_LED1                0x04
-#define P1_3_LED8                0x08
-#define P1_4_                    0x10
-#define P1_5_                    0x20
-#define P1_6_                    0x40
-#define P1_7_                    0x80
+#define P1_0_LEFT_MOTOR_POS_INPUT   0x01
+#define P1_1_RIGHT_MOTOR_NEG_INPUT  0x02
+#define P1_2_RIGHT_MOTOR_POS_INPUT  0x04
+#define P1_3_BUZZER                 0x08
+#define P1_4_                       0x10
+#define P1_5_                       0x20
+#define P1_6_                       0x40
+#define P1_7_                       0x80
 
 /* Port 2 pins */
-#define P2_0_ACLK                0x01
-#define P2_1_SMCLK               0x02
-#define P2_2_LED4                0x04
-#define P2_3_TP7                 0x08
-#define P2_4_TP8                 0x10
-#define P2_5_TICK                0x20
-#define P2_6_TP4                 0x40
-#define P2_7_TP3                 0x80
+#define P2_0_CENTER_EMITTER         0x01
+#define P2_1_LEFT_EMITTER           0x02
+#define P2_2_CENTER_LED_RED_INPUT   0x04
+#define P2_3_LEFT_RECIEVER_SIGNAL   0x08
+#define P2_4_LEFT_MOTOR_NEG_INPUT   0x10
+#define P2_5_TAILLIGHTS_LEDS        0x20
+#define P2_6_EXTRA_INPUT_ONE        0x40
+#define P2_7_EXTRA_INPUT_TWO        0x80
 
 
 /* Port 3 pins */
-#define P3_0_LED7                0x01
-#define P3_1_LED3                0x02
-#define P3_2_LED6                0x04
-#define P3_3_TP5                 0x08
-#define P3_4_                    0x10
-#define P3_5_                    0x20
-#define P3_6_LED2                0x40
-#define P3_7_TP6                 0x80
+#define P3_0_CENTER_LED_GREEN_INPUT 0x01
+#define P3_1_CENTER_LED_BLUE_INPUT  0x02
+#define P3_2_HEADLIGHTS_LEDS        0x04
+#define P3_3_RIGHT_EMITTER          0x08
+#define P3_4_                       0x10
+#define P3_5_                       0x20
+#define P3_6_RIGHT_RECIEVER_SIGNAL  0x40
+#define P3_7_CENTER_RECIEVER_SIGNAL 0x80
 
 /* Setup constants */
 #define TIMERA_INT_ENABLE  0x0196
@@ -92,22 +93,13 @@ Hardware Definitions
 
 
 /************************ Function Declarations ****************************/
-void BlinkSM_Initialize();
-
-void TestBlink();
-void SetTimer(u16 u16Taccr0_);
-void ClockwiseSetup();
-
+void CarSM_Initialize();
 
 /****************************************************************************************
 State Machine Functions
 ****************************************************************************************/
-void BlinkSM_Clockwise();                /* Clockwise sequential blinking of LEDs (100ms each), 3 second pause */
-void BlinkSM_Pulse();                    /* All leds blink 100ms every 5 seconds */
-void BlinkSM_On();                       /* All leds on */
-void BlinkSM_Off();                      /* All leds blink 100ms every 5 seconds */
+void CarSM_Idle();                     /* The state the counter enters if nothing of note has recently happened */
 
-//void BlinkSM_ButtonCheck();              /* Check if button is pressed and held to trigger mode change */
-void BlinkSM_Sleep();                    /* Determines which mode of sleep to enter and sleep */
+void CarSM_Sleep();                    /* Determines which mode of sleep to enter and sleep */
 
-#endif /* __BLINK_HEADER */
+#endif /* __CAR_HEADER */
