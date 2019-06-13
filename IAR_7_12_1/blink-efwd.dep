@@ -103,7 +103,7 @@
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 66 46 14 62 28 23 7 59 64 2</file>
+                    <file> 7 14 66 46 62 23 59 64 28 2</file>
                 </tool>
             </inputs>
         </file>
@@ -259,7 +259,7 @@
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 7 23 14 28 2 36</file>
+                    <file> 28 23 14 7 2 36</file>
                 </tool>
             </inputs>
         </file>

@@ -25,5 +25,6 @@ Constants
 /************************ Function Declarations ****************************/
 
 void WaitThisManyMilliseconds(u32 u32NumberOfMillisecondsToWait);
+u8 GenerateRandomishNumberOneOrZero();
 
 #endif /* __UTILITIES_HEADER */

@@ -30,16 +30,17 @@ typedef struct
 Constants
 ****************************************************************************************/
 
-#define CAR_SPEED_SECONDS_TO_TRAVEL_ONE_MM       (u16)5
-#define CAR_TURN_RATE_SECONDS_TO_TURN_ONE_DEGREE (u16)
+#define CAR_SPEED_MS_TO_TRAVEL_ONE_MM       (u16)5
+#define CAR_TURN_RATE_MS_TO_TURN_ONE_DEGREE (u16)
 
 /************************ Function Declarations ****************************/
 
-void turnLeftThisManyDegrees(u8 u8AngleToTurn, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor);
-void turnRightThisManyDegrees(u8 u8AngleToTurn, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor);
-void goForwardThisManyMillimetres(u8 u8MetresToGoForwards, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor);
-void goBackwardThisManyMillimetres(u8 u8MetresToGoBackwards, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor);
-void motorOn(MotorInformation motorToTurnOn);
-void motorOff(MotorInformation motorToTurnOff);
+void TurnLeftThisManyDegrees(u8 u8AngleToTurn, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor);
+void TurnRightThisManyDegrees(u8 u8AngleToTurn, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor);
+void GoForwardThisManyMillimetres(u8 u8MillimetresToGoForwards, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor);
+void GoBackwardThisManyMillimetres(u8 u8MillimetresToGoBackwards, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor);
+void MotorOn(MotorInformation motorToTurnOn);
+void MotorOff(MotorInformation motorToTurnOff);
+void MotorReverse(MotorInformation motorToReverse);
 
 #endif /* __CAR_HEADER */

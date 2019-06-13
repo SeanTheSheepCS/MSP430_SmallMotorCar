@@ -184,7 +184,7 @@ bool IsObstaclePresent(SidesOfTheCarType sotctSideToCheckForObstacle)
   if(sotctSideToCheckForObstacle == LEFT_SIDE)
   {
     TurnOnEmitter(*pLG_pEInfoLeftEmitter);
-    WaitThisManyMilliseconds(20);
+    WaitThisManyMilliseconds(HOW_LONG_TO_WAIT_BETWEEN_TRANSMIT_AND_RECIEVE_MS);
     if(hasRecieverDetectedAWall(*LG_pRInfoLeftReciever))
     {
       TurnOffEmitter(*pLG_pEInfoLeftEmitter);
@@ -199,7 +199,7 @@ bool IsObstaclePresent(SidesOfTheCarType sotctSideToCheckForObstacle)
   else if(sotctSideToCheckForObstacle == RIGHT_SIDE)
   {
     TurnOnEmitter(*pLG_pEInfoRightEmitter);
-    WaitThisManyMilliseconds(20);
+    WaitThisManyMilliseconds(HOW_LONG_TO_WAIT_BETWEEN_TRANSMIT_AND_RECIEVE_MS);
     if(hasRecieverDetectedAWall(*LG_pRInfoRightReciever))
     {
       TurnOffEmitter(*pLG_pEInfoRightEmitter);
@@ -214,7 +214,7 @@ bool IsObstaclePresent(SidesOfTheCarType sotctSideToCheckForObstacle)
   else if(sotctSideToCheckForObstacle == CENTER_SIDE)
   {
     TurnOnEmitter(*pLG_pEInfoCenterEmitter);
-    WaitThisManyMilliseconds(20);
+    WaitThisManyMilliseconds(HOW_LONG_TO_WAIT_BETWEEN_TRANSMIT_AND_RECIEVE_MS);
     if(hasRecieverDetectedAWall(*LG_pRInfoCenterReciever))
     {
       TurnOffEmitter(*pLG_pEInfoCenterEmitter);
