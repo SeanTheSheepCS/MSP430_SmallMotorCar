@@ -141,7 +141,14 @@ void CarSM_Idle()
           LedOn(*LG_pLedInfoTaillights);
           goBackwardThisManyMillimetres(50, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
           LedOff(*LG_pLedInfoTaillights);
-          turnLeftThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+          if(GenerateRandomishNumberOneOrZero() == 1)
+          {
+            turnLeftThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+          }
+          else
+          {
+            turnRightThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+          }
         }
         else
         {
