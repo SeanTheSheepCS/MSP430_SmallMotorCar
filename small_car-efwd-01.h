@@ -14,12 +14,16 @@ YYYY-MM-DD  Comments
 #ifndef __SMALL_CAR_HEADER
 #define __SMALL_CAR_HEADER
 
+#include "typedef_MSP430.h"
+
 /****************************************************************************************
 Constants
 ****************************************************************************************/
 
 #define NUMBER_OF_LEDS      (u8)5
-#define NUMBER_OF_MPINS     (u8)4
+#define NUMBER_OF_MOTORS    (u8)2
+#define NUMBER_OF_RECIEVERS (u8)3
+#define NUMBER_OF_EMITTERS  (u8)3
 
 /* Timing constants */
 #define TIME_1MS            (u16)3     /* Taccro used to kill roughly 1ms */
@@ -32,6 +36,12 @@ Constants
 #define TIME_3S             (u16)8928  /* Taccro for 3 second period */
 #define TIME_7S             (u16)20832 /* Taccro for 7 second period */
 #define TIME_MAX            (u16)65535 /* Taccro for max second period */
+
+/****************************************************************************************
+Constants
+****************************************************************************************/
+
+typedef enum {LEFT_SIDE = 0, RIGHT_SIDE = 1, CENTER_SIDE = 2} SidesOfTheCarType;
 
 /****************************************************************************************
 Hardware Definitions
@@ -95,6 +105,8 @@ Hardware Definitions
 
 /************************ Function Declarations ****************************/
 
+void DebounceTheCarsInputs(void);
+bool IsObstaclePresent(SidesOfTheCarType sotctSideToCheckForObstacle);
 /****************************************************************************************
 State Machine Functions
 ****************************************************************************************/

@@ -12,7 +12,7 @@
         <ByteLimit>50</ByteLimit>
     </Stack>
     <EEM_State_Storage>
-        <Buffer>010000000300000000000000</Buffer>
+        <Buffer>010000000000000000000000</Buffer>
     </EEM_State_Storage>
     <EEM_Sequencer>
         <Buffer>000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</Buffer>
@@ -24,15 +24,11 @@
         <Counter1>0000000000000000000000000000000000000000000000000000000000000000</Counter1>
     </EEM_Cycle_Counter_1>
     <DebugChecksum>
-        <Checksum>1797635348</Checksum>
+        <Checksum>2828865303</Checksum>
     </DebugChecksum>
     <CallStack>
         <ShowArgs>0</ShowArgs>
     </CallStack>
-    <TermIOLog>
-        <LoggingEnabled>_ 0</LoggingEnabled>
-        <LogFile>_ ""</LogFile>
-    </TermIOLog>
     <Breakpoints>
         <Count>0</Count>
     </Breakpoints>
@@ -62,6 +58,10 @@
         <LogFile>_ ""</LogFile>
         <Category>_ 0</Category>
     </LogFile>
+    <TermIOLog>
+        <LoggingEnabled>_ 0</LoggingEnabled>
+        <LogFile>_ ""</LogFile>
+    </TermIOLog>
     <Aliases>
         <Count>0</Count>
         <SuppressDialog>0</SuppressDialog>

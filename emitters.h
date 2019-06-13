@@ -1,16 +1,16 @@
 /**********************************************************************
-* Header file for reciever functions
+* Header file for emitter functions
 **********************************************************************/
 
 /************************ Revision History ****************************
 YYYY-MM-DD  Comments
 -------------------------------------------------------------------------------------------
-2019-06-12  File created
+2019-06-13  File created
 
 ************************************************************************/
 
-#ifndef __RECIEVER_HEADER
-#define __RECIEVER_HEADER
+#ifndef __EMITTER_HEADER
+#define __EMITTER_HEADER
 
 #include "typedef_MSP430.h"
 
@@ -21,8 +21,8 @@ Type Definitions
 typedef struct
 {
   u16* u16pPortAddress;
-  u8 u8PinIdentifier;  
-}RecieverInformation;
+  u8 u8EmitterIdentifier;  
+}EmitterInformation;
 
 /****************************************************************************************
 Constants
@@ -30,6 +30,7 @@ Constants
 
 /************************ Function Declarations ****************************/
 
-bool hasRecieverDetectedAWall(RecieverInformation rInfoReciever);
+void TurnOnEmitter(EmitterInformation eInfoEmitter);
+void TurnOffEmitter(EmitterInformation eInfoEmitter);
 
 #endif /* __RECIEVER_HEADER */

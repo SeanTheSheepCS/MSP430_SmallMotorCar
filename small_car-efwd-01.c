@@ -16,8 +16,10 @@ YYYY-MM-DD  Comments
 #include "typedef_MSP430.h"
 #include "intrinsics.h"
 #include "leds.h"
-#include "motor_control.h"
+#include "car_control.h"
 #include "recievers.h"
+#include "emitters.h"
+#include "utilities.h"
 
 /******************** External Globals ************************/
 /* Globally available variables from other files as indicated */
@@ -36,14 +38,35 @@ volatile u16 u16GlobalCurrentSleepInterval;           /* Duration that the devic
 /******************** Local Globals ************************/
 /* Global variable definitions intended only for the scope of this file */
 
-LedInformation LG_aLedInfoScoreLeds[NUMBER_OF_LEDS] = {{(u16*)0x0029, P2_2_CENTER_LED_RED_INPUT},
-                                                       {(u16*)0x0029, P2_5_TAILLIGHTS_LEDS},
-                                                       {(u16*)0x0019, P3_0_CENTER_LED_GREEN_INPUT},
-                                                       {(u16*)0x0019, P3_1_CENTER_LED_BLUE_INPUT},
-                                                       {(u16*)0x0019, P3_2_HEADLIGHTS_LEDS}};
+LedInformation LG_aLedInfoLeds[NUMBER_OF_LEDS] = {{(u16*)0x0029, P2_2_CENTER_LED_RED_INPUT},
+                                                  {(u16*)0x0029, P2_5_TAILLIGHTS_LEDS},
+                                                  {(u16*)0x0019, P3_0_CENTER_LED_GREEN_INPUT},
+                                                  {(u16*)0x0019, P3_1_CENTER_LED_BLUE_INPUT},
+                                                  {(u16*)0x0019, P3_2_HEADLIGHTS_LEDS}};
+LedInformation* LG_pLedInfoCenterLedRed = &(LG_aLedInfoLeds[0]);
+LedInformation* LG_pLedInfoTaillights = &(LG_aLedInfoLeds[1]);
+LedInformation* LG_pLedInfoCenterLedGreen = &(LG_aLedInfoLeds[2]);
+LedInformation* LG_pLedInfoCenterLedBlue = &(LG_aLedInfoLeds[3]);
+LedInformation* LG_pLedInfoHeadlights = &(LG_aLedInfoLeds[4]);
 
-MotorInformation LG_aMPinInfoScoreLeds[NUMBER_OF_MPINS] = {{(u16*)0x0029, P2_4_LEFT_MOTOR_NEG_INPUT, (u16*)0x0021, P1_0_LEFT_MOTOR_POS_INPUT},
-                                                           {(u16*)0x0021, P1_1_RIGHT_MOTOR_NEG_INPUT, (u16*)0x0021, P1_2_RIGHT_MOTOR_POS_INPUT}};
+MotorInformation LG_aMInfoMotors[NUMBER_OF_MOTORS] = {{(u16*)0x0029, P2_4_LEFT_MOTOR_NEG_INPUT, (u16*)0x0021, P1_0_LEFT_MOTOR_POS_INPUT},
+                                                      {(u16*)0x0021, P1_1_RIGHT_MOTOR_NEG_INPUT, (u16*)0x0021, P1_2_RIGHT_MOTOR_POS_INPUT}};
+MotorInformation* LG_pMInfoLeftMotor = &(LG_aMInfoMotors[0]);
+MotorInformation* LG_pMInfoRightMotor = &(LG_aMInfoMotors[1]);
+
+RecieverInformation LG_aRInfoRecievers[NUMBER_OF_RECIEVERS] = {{(u16*)0x0029, P2_3_LEFT_RECIEVER_SIGNAL},
+                                                               {(u16*)0x0019, P3_6_RIGHT_RECIEVER_SIGNAL},
+                                                               {(u16*)0x0019, P3_7_CENTER_RECIEVER_SIGNAL}};
+RecieverInformation* LG_pRInfoLeftReciever = &(LG_aRInfoRecievers[0]);
+RecieverInformation* LG_pRInfoRightReciever = &(LG_aRInfoRecievers[1]);
+RecieverInformation* LG_pRInfoCenterReciever = &(LG_aRInfoRecievers[2]);
+
+EmitterInformation LG_aEInfoEmitters[NUMBER_OF_EMITTERS] = {{(u16*)0x0029, P2_0_CENTER_EMITTER},
+                                                            {(u16*)0x0029, P2_1_LEFT_EMITTER},
+                                                            {(u16*)0x0019, P3_3_RIGHT_EMITTER}};
+EmitterInformation* pLG_pEInfoCenterEmitter = &(LG_aEInfoEmitters[0]);
+EmitterInformation* pLG_pEInfoLeftEmitter = &(LG_aEInfoEmitters[1]);
+EmitterInformation* pLG_pEInfoRightEmitter = &(LG_aEInfoEmitters[2]);
 
 /******************** Function Definitions ************************/
  
@@ -78,9 +101,7 @@ void CarSM_Initialize()
 {
   /* Reset key variables */
   u16GlobalCurrentSleepInterval = TIME_MAX;
-    
-  /* Allow a button interrupt and timer to wake up sleep */
-
+  
   P1DIR |= P1_0_LEFT_MOTOR_POS_INPUT;
   P1DIR |= P1_1_RIGHT_MOTOR_NEG_INPUT;
   P1DIR |= P1_2_RIGHT_MOTOR_POS_INPUT;
@@ -111,7 +132,33 @@ void CarSM_Idle()
 {
   while(1)
   {
-    //
+    if(IsObstaclePresent(CENTER_SIDE))
+    {
+      if(IsObstaclePresent(LEFT_SIDE))
+      {
+        if(IsObstaclePresent(RIGHT_SIDE))
+        {
+          LedOn(*LG_pLedInfoTaillights);
+          goBackwardThisManyMillimetres(50, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+          LedOff(*LG_pLedInfoTaillights);
+          turnLeftThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+        }
+        else
+        {
+          turnRightThisManyDegrees(45, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+        }
+      }
+      else
+      {
+        turnLeftThisManyDegrees(45, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+      }
+    }
+    else
+    {
+      LedOn(*LG_pLedInfoHeadlights);
+      goForwardThisManyMillimetres(100, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+      LedOff(*LG_pLedInfoHeadlights);
+    }
   }
 } /* end CarSM_Idle() */
 
@@ -131,3 +178,56 @@ void CarSM_Sleep()
   CarStateMachine = G_fCurrentStateMachine;
 
 } /* end CounterSM_Sleep */
+
+bool IsObstaclePresent(SidesOfTheCarType sotctSideToCheckForObstacle)
+{
+  if(sotctSideToCheckForObstacle == LEFT_SIDE)
+  {
+    TurnOnEmitter(*pLG_pEInfoLeftEmitter);
+    WaitThisManyMilliseconds(20);
+    if(hasRecieverDetectedAWall(*LG_pRInfoLeftReciever))
+    {
+      TurnOffEmitter(*pLG_pEInfoLeftEmitter);
+      return TRUE;
+    }
+    else
+    {
+      TurnOffEmitter(*pLG_pEInfoLeftEmitter);
+      return FALSE;
+    }
+  }
+  else if(sotctSideToCheckForObstacle == RIGHT_SIDE)
+  {
+    TurnOnEmitter(*pLG_pEInfoRightEmitter);
+    WaitThisManyMilliseconds(20);
+    if(hasRecieverDetectedAWall(*LG_pRInfoRightReciever))
+    {
+      TurnOffEmitter(*pLG_pEInfoRightEmitter);
+      return TRUE;
+    }
+    else
+    {
+      TurnOffEmitter(*pLG_pEInfoRightEmitter);
+      return FALSE;
+    }
+  }
+  else if(sotctSideToCheckForObstacle == CENTER_SIDE)
+  {
+    TurnOnEmitter(*pLG_pEInfoCenterEmitter);
+    WaitThisManyMilliseconds(20);
+    if(hasRecieverDetectedAWall(*LG_pRInfoCenterReciever))
+    {
+      TurnOffEmitter(*pLG_pEInfoCenterEmitter);
+      return TRUE;
+    }
+    else
+    {
+      TurnOffEmitter(*pLG_pEInfoCenterEmitter);
+      return FALSE;
+    }
+  }
+  else
+  {
+    return FALSE;
+  }
+}

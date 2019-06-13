@@ -28,12 +28,12 @@ void turnRightThisManyDegrees(u8 u8AngleToTurn, MotorInformation motoInfoLeftMot
   
 }
 
-void goForwardThisManyMetres(u8 u8MetresToGoForwards, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor)
+void goForwardThisManyMillimetres(u8 u8MetresToGoForwards, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor)
 {
   
 }
 
-void goBackwardThisManyMetres(u8 u8MetresToGoBackwards, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor)
+void goBackwardThisManyMillimetres(u8 u8MetresToGoBackwards, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor)
 {
   
 }

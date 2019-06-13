@@ -2163,6 +2163,12 @@
         <name>$PROJ_DIR$\..\cstartup.s43</name>
     </file>
     <file>
+        <name>$PROJ_DIR$\..\emitters.c</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\..\emitters.h</name>
+    </file>
+    <file>
         <name>$PROJ_DIR$\..\io430x21x2.h</name>
     </file>
     <file>
@@ -2194,5 +2200,11 @@
     </file>
     <file>
         <name>$PROJ_DIR$\..\typedef_MSP430.h</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\..\utilities.c</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\..\utilities.h</name>
     </file>
 </project>

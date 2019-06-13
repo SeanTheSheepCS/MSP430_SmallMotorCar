@@ -1,16 +1,16 @@
 /**********************************************************************
-* Header file for reciever functions
+* Header file for utility functions
 **********************************************************************/
 
 /************************ Revision History ****************************
 YYYY-MM-DD  Comments
 -------------------------------------------------------------------------------------------
-2019-06-12  File created
+2019-06-13  File created
 
 ************************************************************************/
 
-#ifndef __RECIEVER_HEADER
-#define __RECIEVER_HEADER
+#ifndef __UTILITIES_HEADER
+#define __UTILITIES_HEADER
 
 #include "typedef_MSP430.h"
 
@@ -18,18 +18,12 @@ YYYY-MM-DD  Comments
 Type Definitions
 ******************************************************************************/
 
-typedef struct
-{
-  u16* u16pPortAddress;
-  u8 u8PinIdentifier;  
-}RecieverInformation;
-
 /****************************************************************************************
 Constants
 ****************************************************************************************/
 
 /************************ Function Declarations ****************************/
 
-bool hasRecieverDetectedAWall(RecieverInformation rInfoReciever);
+void WaitThisManyMilliseconds(u32 u32NumberOfMillisecondsToWait);
 
-#endif /* __RECIEVER_HEADER */
+#endif /* __UTILITIES_HEADER */
