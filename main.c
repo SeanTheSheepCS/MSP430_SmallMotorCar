@@ -80,4 +80,3 @@ __interrupt void TimerAISR(void)
   TACTL = TIMERA_INT_DISABLE;
   asm("BIC #0x0010,0(SP)");
 } // end timer_wakeup_isr
-

@@ -21,12 +21,14 @@ Type Definitions
 typedef struct
 {
   u16* u16pPortAddress;
-  u8 u8PinIdentifier;  
+  u8 u8PinIdentifier;
 }RecieverInformation;
 
 /****************************************************************************************
 Constants
 ****************************************************************************************/
+
+#define DEBOUNCE_TIME_MS (u8)20
 
 /************************ Function Declarations ****************************/
 

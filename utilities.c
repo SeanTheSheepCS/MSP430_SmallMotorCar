@@ -10,10 +10,14 @@ YYYY-MM-DD  Comments
 ************************************************************************/
 
 #include "utilities.h"
+#include "small_car-efwd-01.h"
 
 void WaitThisManyMilliseconds(u32 u32NumberOfMillisecondsToWait)
 {
-  for(u32 i = 0; i < (u32NumberOfMillisecondsToWait*12); i++);
+  /* Since TIME_1MS = 3, multiplying the time we need by 3 gives an okay estimate of how many cycles to wait. */
+  u32 u32numberOfCyclesToWait = (u32NumberOfMillisecondsToWait*TIME_1MS);
+  /* Since two instructions need to be executed every iteration of the loop, i is incremented by 2 each time. */
+  for(u32 i = 0; i < u32numberOfCyclesToWait; i+=2);
 }
   
 u8 GenerateRandomishNumberOneOrZero()

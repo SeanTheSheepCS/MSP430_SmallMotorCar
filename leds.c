@@ -13,21 +13,35 @@ YYYY-MM-DD  Comments
 #include "io430f2122.h"
 #include "typedef_MSP430.h"
 
-void LedOn(LedInformation LEDInfo)
+void LedOn(LedInformation LedInfo)
 {
-  *(LEDInfo.u16pPortAddress) |= LEDInfo.u8LEDIdentifier;
+  if(LedInfo.ledactActiveType == LED_ACTIVE_TYPE_HIGH)
+  {
+    *(LedInfo.u16pPortAddress) |= LedInfo.u8LedIdentifier;
+  }
+  else if(LedInfo.ledactActiveType == LED_ACTIVE_TYPE_LOW)
+  {
+    *(LedInfo.u16pPortAddress) &= ~LedInfo.u8LedIdentifier;
+  }
 }
 
-void LedOff(LedInformation LEDInfo)
+void LedOff(LedInformation LedInfo)
 {
-  *(LEDInfo.u16pPortAddress) &= ~LEDInfo.u8LEDIdentifier;
+  if(LedInfo.ledactActiveType == LED_ACTIVE_TYPE_LOW)
+  {
+    *(LedInfo.u16pPortAddress) |= LedInfo.u8LedIdentifier;
+  }
+  else if(LedInfo.ledactActiveType == LED_ACTIVE_TYPE_HIGH)
+  {
+    *(LedInfo.u16pPortAddress) &= ~LedInfo.u8LedIdentifier;
+  }
 }
 
-bool isLedOn(LedInformation LEDInfo)
+bool isLedOn(LedInformation LedInfo)
 {
-  return (((*(LEDInfo.u16pPortAddress)) & LEDInfo.u8LEDIdentifier) == LEDInfo.u8LEDIdentifier);
+  return (((*(LedInfo.u16pPortAddress)) & LedInfo.u8LedIdentifier) == LedInfo.u8LedIdentifier);
 }
-bool isLedOff(LedInformation LEDInfo)
+bool isLedOff(LedInformation LedInfo)
 {
-  return !isLedOn(LEDInfo);
+  return !isLedOn(LedInfo);
 }

@@ -25,7 +25,7 @@ Constants
 #define NUMBER_OF_RECIEVERS (u8)3
 #define NUMBER_OF_EMITTERS  (u8)3
 
-#define HOW_LONG_TO_WAIT_BETWEEN_TRANSMIT_AND_RECIEVE_MS (u32)20
+#define HOW_LONG_TO_WAIT_BETWEEN_TRANSMIT_AND_RECIEVE_MS (u32)100
 
 /* Timing constants */
 #define TIME_1MS            (u16)3     /* Taccro used to kill roughly 1ms */
@@ -107,7 +107,6 @@ Hardware Definitions
 
 /************************ Function Declarations ****************************/
 
-void DebounceTheCarsInputs(void);
 bool IsObstaclePresent(SidesOfTheCarType sotctSideToCheckForObstacle);
 /****************************************************************************************
 State Machine Functions

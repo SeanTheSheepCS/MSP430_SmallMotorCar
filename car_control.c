@@ -12,6 +12,7 @@ YYYY-MM-DD  Comments
 #include "car_control.h"
 #include "io430.h"
 #include "typedef_MSP430.h"
+#include "utilities.h"
 
 /******************** Local Globals ************************/
 /* Global variable definitions intended only for the scope of this file */
@@ -40,7 +41,7 @@ void TurnRightThisManyDegrees(u8 u8AngleToTurn, MotorInformation motoInfoLeftMot
 
 void GoForwardThisManyMillimetres(u8 u8MillimetresToGoForwards, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor)
 {
-  u32 u32NumberOfMillisecondsToMoveForwardsFor = CAR_SPEED_MS_TO_TRAVEL_ONE_MM * u8MetresToGoForwards;
+  u32 u32NumberOfMillisecondsToMoveForwardsFor = CAR_SPEED_MS_TO_TRAVEL_ONE_MILLIMETER * u8MillimetresToGoForwards;
   MotorOn(motoInfoLeftMotor);
   MotorOn(motoInfoRightMotor);
   WaitThisManyMilliseconds(u32NumberOfMillisecondsToMoveForwardsFor);
@@ -50,7 +51,7 @@ void GoForwardThisManyMillimetres(u8 u8MillimetresToGoForwards, MotorInformation
 
 void GoBackwardThisManyMillimetres(u8 u8MillimetresToGoBackwards, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor)
 {
-  u32 u32NumberOfMillisecondsToMoveBackwardsFor = CAR_SPEED_MS_TO_TRAVEL_ONE_MM * u8MetresToGoBackwards;
+  u32 u32NumberOfMillisecondsToMoveBackwardsFor = CAR_SPEED_MS_TO_TRAVEL_ONE_MILLIMETER * u8MillimetresToGoBackwards;
   MotorReverse(motoInfoLeftMotor);
   MotorReverse(motoInfoRightMotor);
   WaitThisManyMilliseconds(u32NumberOfMillisecondsToMoveBackwardsFor);
@@ -60,15 +61,18 @@ void GoBackwardThisManyMillimetres(u8 u8MillimetresToGoBackwards, MotorInformati
 
 void MotorOn(MotorInformation motorToTurnOn)
 {
-  
+  *(motorToTurnOn.u16pPortAddressNegInput) &= ~motorToTurnOn.u8PinIdentifierNegInput;
+  *(motorToTurnOn.u16pPortAddressPosInput) |= motorToTurnOn.u8PinIdentifierPosInput;
 }
 
 void MotorOff(MotorInformation motorToTurnOff)
 {
-  
+  *(motorToTurnOff.u16pPortAddressNegInput) &= ~motorToTurnOff.u8PinIdentifierNegInput;
+  *(motorToTurnOff.u16pPortAddressPosInput) &= ~motorToTurnOff.u8PinIdentifierPosInput;
 }
 
 void MotorReverse(MotorInformation motorToReverse)
 {
-  
+  *(motorToReverse.u16pPortAddressNegInput) |= motorToReverse.u8PinIdentifierNegInput;
+  *(motorToReverse.u16pPortAddressPosInput) &= ~motorToReverse.u8PinIdentifierPosInput;
 }
