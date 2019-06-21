@@ -49,8 +49,8 @@ LedInformation* LG_pLedInfoCenterLedGreen = &(LG_aLedInfoLeds[2]);
 LedInformation* LG_pLedInfoCenterLedBlue = &(LG_aLedInfoLeds[3]);
 LedInformation* LG_pLedInfoHeadlights = &(LG_aLedInfoLeds[4]);
 
-MotorInformation LG_aMInfoMotors[NUMBER_OF_MOTORS] = {{(u16*)0x0029, P2_4_LEFT_MOTOR_NEG_INPUT, (u16*)0x0021, P1_0_LEFT_MOTOR_POS_INPUT},
-                                                      {(u16*)0x0021, P1_1_RIGHT_MOTOR_NEG_INPUT, (u16*)0x0021, P1_2_RIGHT_MOTOR_POS_INPUT}};
+MotorInformation LG_aMInfoMotors[NUMBER_OF_MOTORS] = {{(u16*)0x0021, P1_1_LEFT_MOTOR_NEG_INPUT, (u16*)0x0021, P1_2_LEFT_MOTOR_POS_INPUT},
+                                                      {(u16*)0x0029, P2_4_RIGHT_MOTOR_NEG_INPUT, (u16*)0x0021, P1_0_RIGHT_MOTOR_POS_INPUT}};
 MotorInformation* LG_pMInfoLeftMotor = &(LG_aMInfoMotors[0]);
 MotorInformation* LG_pMInfoRightMotor = &(LG_aMInfoMotors[1]);
 
@@ -102,16 +102,16 @@ void CarSM_Initialize()
   /* Reset key variables */
   u16GlobalCurrentSleepInterval = TIME_MAX;
   
-  P1DIR |= P1_0_LEFT_MOTOR_POS_INPUT;
-  P1DIR |= P1_1_RIGHT_MOTOR_NEG_INPUT;
-  P1DIR |= P1_2_RIGHT_MOTOR_POS_INPUT;
+  P1DIR |= P1_0_RIGHT_MOTOR_POS_INPUT;
+  P1DIR |= P1_1_LEFT_MOTOR_NEG_INPUT;
+  P1DIR |= P1_2_LEFT_MOTOR_POS_INPUT;
   P1DIR |= P1_3_BUZZER;
   
   P2DIR |= P2_0_CENTER_EMITTER;
   P2DIR |= P2_1_LEFT_EMITTER;
   P2DIR |= P2_2_CENTER_LED_RED_INPUT;
   P2DIR &= ~P2_3_LEFT_RECIEVER_SIGNAL;
-  P2DIR |= P2_4_LEFT_MOTOR_NEG_INPUT;
+  P2DIR |= P2_4_RIGHT_MOTOR_NEG_INPUT;
   P2DIR |= P2_5_TAILLIGHTS_LEDS;
   P2DIR |= P2_6_EXTRA_INPUT_ONE;
   P2DIR |= P2_7_EXTRA_INPUT_TWO;
@@ -128,7 +128,7 @@ void CarSM_Initialize()
   LedOff(*LG_pLedInfoCenterLedBlue);
   LedOff(*LG_pLedInfoTaillights);
   LedOff(*LG_pLedInfoHeadlights);
-       
+  
   CarStateMachine = CarSM_Idle;
   
 } /* end CounterSM_Initialize */
@@ -145,6 +145,7 @@ void CarSM_Idle()
         if(IsObstaclePresent(RIGHT_SIDE))
         {
           LedOn(*LG_pLedInfoTaillights);
+          LedOn(*LG_pLedInfoCenterLedGreen);
           GoBackwardThisManyMillimetres(50, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
           LedOff(*LG_pLedInfoTaillights);
           if(GenerateRandomishNumberOneOrZero() == 1)
@@ -155,15 +156,20 @@ void CarSM_Idle()
           {
             TurnRightThisManyDegrees(180, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
           }
+          LedOff(*LG_pLedInfoCenterLedGreen);
         }
         else
         {
+          LedOn(*LG_pLedInfoCenterLedBlue);
           TurnRightThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+          LedOff(*LG_pLedInfoCenterLedBlue);
         }
       }
       else
       {
+        LedOn(*LG_pLedInfoCenterLedRed);
         TurnLeftThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+        LedOff(*LG_pLedInfoCenterLedRed);
       }
     }
     else

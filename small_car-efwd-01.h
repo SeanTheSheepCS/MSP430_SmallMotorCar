@@ -49,9 +49,9 @@ typedef enum {LEFT_SIDE = 0, RIGHT_SIDE = 1, CENTER_SIDE = 2} SidesOfTheCarType;
 Hardware Definitions
 ****************************************************************************************/
 /* Port 1 pins */
-#define P1_0_LEFT_MOTOR_POS_INPUT   0x01
-#define P1_1_RIGHT_MOTOR_NEG_INPUT  0x02
-#define P1_2_RIGHT_MOTOR_POS_INPUT  0x04
+#define P1_0_RIGHT_MOTOR_POS_INPUT  0x01
+#define P1_1_LEFT_MOTOR_NEG_INPUT   0x02
+#define P1_2_LEFT_MOTOR_POS_INPUT   0x04
 #define P1_3_BUZZER                 0x08
 #define P1_4_                       0x10
 #define P1_5_                       0x20
@@ -63,7 +63,7 @@ Hardware Definitions
 #define P2_1_LEFT_EMITTER           0x02
 #define P2_2_CENTER_LED_RED_INPUT   0x04
 #define P2_3_LEFT_RECIEVER_SIGNAL   0x08
-#define P2_4_LEFT_MOTOR_NEG_INPUT   0x10
+#define P2_4_RIGHT_MOTOR_NEG_INPUT  0x10
 #define P2_5_TAILLIGHTS_LEDS        0x20
 #define P2_6_EXTRA_INPUT_ONE        0x40
 #define P2_7_EXTRA_INPUT_TWO        0x80
@@ -108,6 +108,7 @@ Hardware Definitions
 /************************ Function Declarations ****************************/
 
 bool IsObstaclePresent(SidesOfTheCarType sotctSideToCheckForObstacle);
+void carTestFunction(void);
 /****************************************************************************************
 State Machine Functions
 ****************************************************************************************/

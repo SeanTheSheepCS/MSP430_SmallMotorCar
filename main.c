@@ -56,7 +56,7 @@ int main(void)
 
   /* Enter the state machine where the program will remain unless power cycled */
   __bis_SR_register(GIE);
-
+  
   while(1)
   {
 	  CarStateMachine();
@@ -80,3 +80,10 @@ __interrupt void TimerAISR(void)
   TACTL = TIMERA_INT_DISABLE;
   asm("BIC #0x0010,0(SP)");
 } // end timer_wakeup_isr
+
+
+#pragma vector = ADC10_VECTOR
+__interrupt void adc10_interrupt(void)
+{
+    
+}

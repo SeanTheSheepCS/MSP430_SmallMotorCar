@@ -26,7 +26,7 @@ u8 GenerateRandomishNumberOneOrZero()
   static u8 u8LengthOfRandomNumberSequence = 20;
   static u8 u8CurrentIndexInList = 0;
   //Picks numbers from a sequence that was pregenerated using a random number generator
-  //NOTE: this function is not truly random.
+  //This function is not really random at all
   while(u8CurrentIndexInList >= u8LengthOfRandomNumberSequence)
   {
     u8CurrentIndexInList -= u8LengthOfRandomNumberSequence;

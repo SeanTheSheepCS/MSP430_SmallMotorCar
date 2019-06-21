@@ -17,35 +17,38 @@ bool hasRecieverDetectedAWall(RecieverInformation rInfoReciever)
 {
   if(rInfoReciever.u16pPortAddress == (u16*)0x0021)  /* If the reciever belongs to port one... */
   {
-    if(!(P1IN & rInfoReciever.u8PinIdentifier))
+    P1SEL |= rInfoReciever.u8PinIdentifier;
+    ADC10CTL1 = INCH_3 + ADC10DIV_3;
+    ADC10CTL0 = ADC10ON + ADC10IE + SREF_0 + ADC10SHT_3;  // Turns the control on, enables interrupts
+    ADC10AE0 |= rInfoReciever.u8PinIdentifier;
+    ADC10CTL0 |= ENC + ADC10SC;
+    if(ADC10MEM < RECIEVER_SENSITIVITY_MAX_VOLTAGE_TO_NOT_TURN)
     {
-      //WaitThisManyMilliseconds(DEBOUNCE_TIME_MS);
-      //if(!(P1IN & rInfoReciever.u8PinIdentifier))
-      //{
-        return TRUE;
-      //}
+      return TRUE;
     }
   }
   else if(rInfoReciever.u16pPortAddress == (u16*)0x0029)  /* If the reciever belongs to port two... */
   {
-    if(!(P2IN & rInfoReciever.u8PinIdentifier))
+    P2SEL |= rInfoReciever.u8PinIdentifier;
+    ADC10CTL1 = INCH_3 + ADC10DIV_3;
+    ADC10CTL0 = ADC10ON + ADC10IE + SREF_0 + ADC10SHT_3;  // Turns the control on, enables interrupts
+    ADC10AE0 |= rInfoReciever.u8PinIdentifier;
+    ADC10CTL0 |= ENC + ADC10SC;
+    if(ADC10MEM < RECIEVER_SENSITIVITY_MAX_VOLTAGE_TO_NOT_TURN)
     {
-      //WaitThisManyMilliseconds(DEBOUNCE_TIME_MS);
-      //if(!(P2IN & rInfoReciever.u8PinIdentifier))
-      //{
-        return TRUE;
-      //}
+      return TRUE;
     }
   }
   else if(rInfoReciever.u16pPortAddress == (u16*)0x0019)  /* If the reciever belongs to port three... */
   {
-    if(!(P3IN & rInfoReciever.u8PinIdentifier))
+    P3SEL |= rInfoReciever.u8PinIdentifier;
+    ADC10CTL1 = INCH_3 + ADC10DIV_3;
+    ADC10CTL0 = ADC10ON + ADC10IE + SREF_0 + ADC10SHT_3;  // Turns the control on, enables interrupts
+    ADC10AE0 |= rInfoReciever.u8PinIdentifier;
+    ADC10CTL0 |= ENC + ADC10SC;
+    if(ADC10MEM < RECIEVER_SENSITIVITY_MAX_VOLTAGE_TO_NOT_TURN)
     {
-      //WaitThisManyMilliseconds(DEBOUNCE_TIME_MS);
-      //if(!(P3IN & rInfoReciever.u8PinIdentifier))
-      //{
-        return TRUE;
-      //}
+      return TRUE;
     }
   }
   return FALSE;

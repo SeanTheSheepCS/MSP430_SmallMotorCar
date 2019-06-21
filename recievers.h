@@ -29,6 +29,7 @@ Constants
 ****************************************************************************************/
 
 #define DEBOUNCE_TIME_MS (u8)20
+#define RECIEVER_SENSITIVITY_MAX_VOLTAGE_TO_NOT_TURN (u16) 0x0360
 
 /************************ Function Declarations ****************************/
 
