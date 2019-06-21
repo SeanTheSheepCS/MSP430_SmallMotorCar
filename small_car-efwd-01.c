@@ -138,39 +138,73 @@ void CarSM_Idle()
 {
   while(1)
   {
-    if(IsObstaclePresent(CENTER_SIDE))
-    {
-      if(IsObstaclePresent(LEFT_SIDE))
-      {
-        if(IsObstaclePresent(RIGHT_SIDE))
-        {
-          LedOn(*LG_pLedInfoTaillights);
-          GoBackwardThisManyMillimetres(50, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
-          LedOff(*LG_pLedInfoTaillights);
-          if(GenerateRandomishNumberOneOrZero() == 1)
-          {
-            TurnLeftThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
-          }
-          else
-          {
-            TurnRightThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
-          }
-        }
-        else
-        {
-          TurnRightThisManyDegrees(45, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
-        }
-      }
-      else
-      {
-        TurnLeftThisManyDegrees(45, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
-      }
-    }
-    else
+    bool boolObstaclePresentCenterSide = IsObstaclePresent(CENTER_SIDE);
+    bool boolObstaclePresentRightSide = IsObstaclePresent(RIGHT_SIDE);
+    bool boolObstaclePresentLeftSide = IsObstaclePresent(LEFT_SIDE);
+    
+    if(!(boolObstaclePresentCenterSide) && !(boolObstaclePresentRightSide) && !(boolObstaclePresentLeftSide))
     {
       LedOn(*LG_pLedInfoHeadlights);
       GoForwardThisManyMillimetres(10, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
       LedOff(*LG_pLedInfoHeadlights);
+    }
+    else if(!(boolObstaclePresentCenterSide) && !(boolObstaclePresentRightSide) &&  (boolObstaclePresentLeftSide))
+    {
+      TurnRightThisManyDegrees(45, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+    }
+    else if(!(boolObstaclePresentCenterSide) &&  (boolObstaclePresentRightSide) && !(boolObstaclePresentLeftSide))
+    {
+      TurnLeftThisManyDegrees(45, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+    }
+    else if(!(boolObstaclePresentCenterSide) &&  (boolObstaclePresentRightSide) &&  (boolObstaclePresentLeftSide))
+    {
+      LedOn(*LG_pLedInfoTaillights);
+      GoBackwardThisManyMillimetres(50, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+      LedOff(*LG_pLedInfoTaillights);
+      if(GenerateRandomishNumberOneOrZero() == 1)
+      {
+        TurnLeftThisManyDegrees(45, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+      }
+      else
+      {
+        TurnRightThisManyDegrees(45, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+      }
+    }
+    else if( (boolObstaclePresentCenterSide) && !(boolObstaclePresentRightSide) && !(boolObstaclePresentLeftSide))
+    {
+      LedOn(*LG_pLedInfoTaillights);
+      GoBackwardThisManyMillimetres(50, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+      LedOff(*LG_pLedInfoTaillights);
+      if(GenerateRandomishNumberOneOrZero() == 1)
+      {
+        TurnLeftThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+      }
+      else
+      {
+        TurnRightThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+      }
+    }
+    else if( (boolObstaclePresentCenterSide) && !(boolObstaclePresentRightSide) &&  (boolObstaclePresentLeftSide))
+    {
+      TurnRightThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+    }
+    if( (boolObstaclePresentCenterSide) &&  (boolObstaclePresentRightSide) && !(boolObstaclePresentLeftSide))
+    {
+      TurnLeftThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+    }
+    if( (boolObstaclePresentCenterSide) &&  (boolObstaclePresentRightSide) &&  (boolObstaclePresentLeftSide))
+    {
+      LedOn(*LG_pLedInfoTaillights);
+      GoBackwardThisManyMillimetres(50, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+      LedOff(*LG_pLedInfoTaillights);
+      if(GenerateRandomishNumberOneOrZero() == 1)
+      {
+        TurnLeftThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+      }
+      else
+      {
+        TurnRightThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+      }
     }
   }
 } /* end CarSM_Idle() */
