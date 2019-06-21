@@ -31,5 +31,6 @@ u8 GenerateRandomishNumberOneOrZero()
   {
     u8CurrentIndexInList -= u8LengthOfRandomNumberSequence;
   }
-  return au8RandomNumberSequence[u8LengthOfRandomNumberSequence];
+  u8CurrentIndexInList++;
+  return au8RandomNumberSequence[u8CurrentIndexInList];
 }

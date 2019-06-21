@@ -145,31 +145,25 @@ void CarSM_Idle()
         if(IsObstaclePresent(RIGHT_SIDE))
         {
           LedOn(*LG_pLedInfoTaillights);
-          LedOn(*LG_pLedInfoCenterLedGreen);
           GoBackwardThisManyMillimetres(50, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
           LedOff(*LG_pLedInfoTaillights);
           if(GenerateRandomishNumberOneOrZero() == 1)
           {
-            TurnLeftThisManyDegrees(180, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+            TurnLeftThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
           }
           else
           {
-            TurnRightThisManyDegrees(180, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+            TurnRightThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
           }
-          LedOff(*LG_pLedInfoCenterLedGreen);
         }
         else
         {
-          LedOn(*LG_pLedInfoCenterLedBlue);
-          TurnRightThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
-          LedOff(*LG_pLedInfoCenterLedBlue);
+          TurnRightThisManyDegrees(45, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
         }
       }
       else
       {
-        LedOn(*LG_pLedInfoCenterLedRed);
-        TurnLeftThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
-        LedOff(*LG_pLedInfoCenterLedRed);
+        TurnLeftThisManyDegrees(45, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
       }
     }
     else
@@ -203,7 +197,6 @@ bool IsObstaclePresent(SidesOfTheCarType sotctSideToCheckForObstacle)
   if(sotctSideToCheckForObstacle == LEFT_SIDE)
   {
     TurnOnEmitter(*pLG_pEInfoLeftEmitter);
-    WaitThisManyMilliseconds(HOW_LONG_TO_WAIT_BETWEEN_TRANSMIT_AND_RECIEVE_MS);
     if(hasRecieverDetectedAWall(*LG_pRInfoLeftReciever))
     {
       TurnOffEmitter(*pLG_pEInfoLeftEmitter);
@@ -218,7 +211,6 @@ bool IsObstaclePresent(SidesOfTheCarType sotctSideToCheckForObstacle)
   else if(sotctSideToCheckForObstacle == RIGHT_SIDE)
   {
     TurnOnEmitter(*pLG_pEInfoRightEmitter);
-    WaitThisManyMilliseconds(HOW_LONG_TO_WAIT_BETWEEN_TRANSMIT_AND_RECIEVE_MS);
     if(hasRecieverDetectedAWall(*LG_pRInfoRightReciever))
     {
       TurnOffEmitter(*pLG_pEInfoRightEmitter);
@@ -233,7 +225,6 @@ bool IsObstaclePresent(SidesOfTheCarType sotctSideToCheckForObstacle)
   else if(sotctSideToCheckForObstacle == CENTER_SIDE)
   {
     TurnOnEmitter(*pLG_pEInfoCenterEmitter);
-    WaitThisManyMilliseconds(HOW_LONG_TO_WAIT_BETWEEN_TRANSMIT_AND_RECIEVE_MS);
     if(hasRecieverDetectedAWall(*LG_pRInfoCenterReciever))
     {
       TurnOffEmitter(*pLG_pEInfoCenterEmitter);

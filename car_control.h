@@ -30,7 +30,7 @@ typedef struct
 Constants
 ****************************************************************************************/
 
-#define CAR_SPEED_MS_TO_TRAVEL_ONE_MILLIMETER (u16)10
+#define CAR_SPEED_MS_TO_TRAVEL_ONE_MILLIMETER (u16)8
 #define CAR_TURN_RATE_MS_TO_TURN_ONE_DEGREE   (u16)5
 
 /************************ Function Declarations ****************************/

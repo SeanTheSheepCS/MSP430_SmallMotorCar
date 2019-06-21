@@ -25,8 +25,6 @@ Constants
 #define NUMBER_OF_RECIEVERS (u8)3
 #define NUMBER_OF_EMITTERS  (u8)3
 
-#define HOW_LONG_TO_WAIT_BETWEEN_TRANSMIT_AND_RECIEVE_MS (u32)100
-
 /* Timing constants */
 #define TIME_1MS            (u16)3     /* Taccro used to kill roughly 1ms */
 #define TIME_10MS           (u16)30    /* Taccro used to kill roughly 10ms */

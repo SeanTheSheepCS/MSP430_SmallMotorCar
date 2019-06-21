@@ -127,7 +127,7 @@
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 73 62 17 34 27 11</file>
+                    <file> 34 62 17 73 27 11</file>
                 </tool>
             </inputs>
         </file>
@@ -188,7 +188,7 @@
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 5 73 9 17 12 62 34 8 16 27</file>
+                    <file> 17 5 9 73 12 62 34 8 16 27</file>
                 </tool>
             </inputs>
         </file>
