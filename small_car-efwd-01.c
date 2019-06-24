@@ -8,7 +8,7 @@ YYYY-MM-DD  Comments
 2013-11-21  Port from ANT key fob.
 2019-06-05  Binary counter scoreboard first attempt
 2019-06-12  Small motor car first attempt
-
+2019-06-24  Documentation done and code finalized for the camp
 ************************************************************************/
 
 #include "small_car-efwd-01.h"
@@ -97,6 +97,21 @@ void SetTimer(u16 usTaccr0_)
 /****************************************************************************************
 State Machine Functions
 ****************************************************************************************/
+
+/*----------------------------------------------------------------------------------------------------------------------
+Function: CarSM_Initialize()
+
+Description: Sets the direction on all of the pins, turns all the LEDS off, and sets the car to an idle state
+
+Requires:
+  - N/A
+
+Promises:
+  - All directions on the pins are set
+  - All LEDs are turned off
+  - The car state machine is now in its idle state
+
+*/
 void CarSM_Initialize()
 {
   /* Reset key variables */
@@ -131,9 +146,20 @@ void CarSM_Initialize()
   
   CarStateMachine = CarSM_Idle;
   
-} /* end CounterSM_Initialize */
+} /* end CarSM_Initialize */
 
-/*----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------
+Function: CarSM_Idle()
+
+Description: The car should go forward until it detects something in its path, then turns around or backs up accordingly
+
+Requires:
+  - Car has been properly initialized
+
+Promises:
+  - Follows the behaviour outlined in the excel sheet found at:        extra_information/car_behaviour.xlsx
+
+*/
 void CarSM_Idle()
 {
   bool boolObstaclePresentCenterSide = IsObstaclePresent(CENTER_SIDE);
@@ -217,8 +243,18 @@ void CarSM_Idle()
 
 
 
-/*----------------------------------------------------------------------------*/
-void CarSM_Sleep()
+/*----------------------------------------------------------------------------------------------------------------------
+Function: 
+
+Description: 
+
+Requires:
+  -
+
+Promises:
+  -
+
+*/void CarSM_Sleep()
 {
   /* Update to the current sleep interval and re-enable the timer interrupt */
   SetTimer(u16GlobalCurrentSleepInterval);
@@ -232,6 +268,18 @@ void CarSM_Sleep()
 
 } /* end CounterSM_Sleep */
 
+/*----------------------------------------------------------------------------------------------------------------------
+Function: 
+
+Description: 
+
+Requires:
+  -
+
+Promises:
+  -
+
+*/
 bool IsObstaclePresent(SidesOfTheCarType sotctSideToCheckForObstacle)
 {
   if(sotctSideToCheckForObstacle == LEFT_SIDE)

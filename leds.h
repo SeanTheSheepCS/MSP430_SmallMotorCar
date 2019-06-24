@@ -6,6 +6,7 @@
 YYYY-MM-DD  Comments
 -------------------------------------------------------------------------------------------
 2019-06-04  File created
+2019-06-24  File documented and finalized for camp
 
 ************************************************************************/
 
@@ -18,14 +19,14 @@ YYYY-MM-DD  Comments
 Type Definitions
 ******************************************************************************/
 
-typedef enum {LED_ACTIVE_TYPE_HIGH = 0, LED_ACTIVE_TYPE_LOW = 1} LedActiveType;
+typedef enum {LED_ACTIVE_TYPE_HIGH = 0, LED_ACTIVE_TYPE_LOW = 1} LedActiveType; //LED_ACTIVE_TYPE_HIGH means when a voltage is provided, the LED turns on. LED_ACTIVE_TYPE_LOW means when no voltage is provided, the LED turns on
 
 typedef struct
 {
   u16* u16pPortAddress;
   u8 u8LedIdentifier;
   LedActiveType ledactActiveType;
-}LedInformation;
+}LedInformation; //This struct contains all the information needed to turn on and off an LED
 
 /****************************************************************************************
 Constants

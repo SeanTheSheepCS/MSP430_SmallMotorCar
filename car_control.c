@@ -19,6 +19,18 @@ YYYY-MM-DD  Comments
 
 /******************** Function Definitions ************************/
 
+/*----------------------------------------------------------------------------------------------------------------------
+Function: 
+
+Description: 
+
+Requires:
+  -
+
+Promises:
+  -
+
+*/
 void TurnLeftThisManyDegrees(u8 u8AngleToTurn, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor)
 {
   u32 u32NumberOfMillisecondsToTurnFor = CAR_TURN_RATE_MS_TO_TURN_ONE_DEGREE * u8AngleToTurn;
@@ -29,6 +41,18 @@ void TurnLeftThisManyDegrees(u8 u8AngleToTurn, MotorInformation motoInfoLeftMoto
   MotorOff(motoInfoLeftMotor);
 }
 
+/*----------------------------------------------------------------------------------------------------------------------
+Function: 
+
+Description: 
+
+Requires:
+  -
+
+Promises:
+  -
+
+*/
 void TurnRightThisManyDegrees(u8 u8AngleToTurn, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor)
 {
   u32 u32NumberOfMillisecondsToTurnFor = CAR_TURN_RATE_MS_TO_TURN_ONE_DEGREE * u8AngleToTurn;
@@ -39,6 +63,18 @@ void TurnRightThisManyDegrees(u8 u8AngleToTurn, MotorInformation motoInfoLeftMot
   MotorOff(motoInfoLeftMotor);
 }
 
+/*----------------------------------------------------------------------------------------------------------------------
+Function: 
+
+Description: 
+
+Requires:
+  -
+
+Promises:
+  -
+
+*/
 void GoForwardThisManyMillimetres(u8 u8MillimetresToGoForwards, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor)
 {
   u32 u32NumberOfMillisecondsToMoveForwardsFor = CAR_SPEED_MS_TO_TRAVEL_ONE_MILLIMETER * u8MillimetresToGoForwards;
@@ -49,6 +85,18 @@ void GoForwardThisManyMillimetres(u8 u8MillimetresToGoForwards, MotorInformation
   MotorOff(motoInfoLeftMotor);
 }
 
+/*----------------------------------------------------------------------------------------------------------------------
+Function: 
+
+Description: 
+
+Requires:
+  -
+
+Promises:
+  -
+
+*/
 void GoBackwardThisManyMillimetres(u8 u8MillimetresToGoBackwards, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor)
 {
   u32 u32NumberOfMillisecondsToMoveBackwardsFor = CAR_SPEED_MS_TO_TRAVEL_ONE_MILLIMETER * u8MillimetresToGoBackwards;
@@ -59,18 +107,54 @@ void GoBackwardThisManyMillimetres(u8 u8MillimetresToGoBackwards, MotorInformati
   MotorOff(motoInfoLeftMotor);
 }
 
+/*----------------------------------------------------------------------------------------------------------------------
+Function: 
+
+Description: 
+
+Requires:
+  -
+
+Promises:
+  -
+
+*/
 void MotorOn(MotorInformation motorToTurnOn)
 {
   *(motorToTurnOn.u16pPortAddressNegInput) &= ~motorToTurnOn.u8PinIdentifierNegInput;
   *(motorToTurnOn.u16pPortAddressPosInput) |= motorToTurnOn.u8PinIdentifierPosInput;
 }
 
+/*----------------------------------------------------------------------------------------------------------------------
+Function: 
+
+Description: 
+
+Requires:
+  -
+
+Promises:
+  -
+
+*/
 void MotorOff(MotorInformation motorToTurnOff)
 {
   *(motorToTurnOff.u16pPortAddressNegInput) &= ~motorToTurnOff.u8PinIdentifierNegInput;
   *(motorToTurnOff.u16pPortAddressPosInput) &= ~motorToTurnOff.u8PinIdentifierPosInput;
 }
 
+/*----------------------------------------------------------------------------------------------------------------------
+Function: 
+
+Description: 
+
+Requires:
+  -
+
+Promises:
+  -
+
+*/
 void MotorReverse(MotorInformation motorToReverse)
 {
   *(motorToReverse.u16pPortAddressNegInput) |= motorToReverse.u8PinIdentifierNegInput;
