@@ -6,6 +6,7 @@
 YYYY-MM-DD  Comments
 -------------------------------------------------------------------------------------------
 2019-06-13  File created
+2019-06-28  Documentation done
 
 ************************************************************************/
 
@@ -22,7 +23,7 @@ typedef struct
 {
   u16* u16pPortAddress;
   u8 u8EmitterIdentifier;  
-}EmitterInformation;
+}EmitterInformation; //Information needed to turn on and off emitters
 
 /****************************************************************************************
 Constants

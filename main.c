@@ -1,15 +1,7 @@
 /**********************************************************************
 File name:	main.c
 
-Main program file for Blinker 
-A simple program to sequentially blink an array of 8 LEDs, where 
-blinking pattern is selectable by button press.
-
-When complete, the following modes will be available:
-1. Off
-2. All LEDs on (this will stress the battery!)
-3. Random blinking
-4. Cyclical blink
+Main program file for the car 
 
 **********************************************************************/
 
@@ -20,7 +12,7 @@ When complete, the following modes will be available:
 YYYY-MM-DD  Checksum  Comments
 -------------------------------------------------------------------------------------------
 2009-04-08            First release. 
-
+2019-06-28            Documentation updated
 ************************************************************************/
 
 #include "small_car-efwd-01.h"

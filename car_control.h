@@ -6,7 +6,7 @@
 YYYY-MM-DD  Comments
 -------------------------------------------------------------------------------------------
 2019-06-12  File created
-
+2019-06-28  Documentation done
 ************************************************************************/
 
 #ifndef __CAR_CONTROL_HEADER
@@ -24,7 +24,7 @@ typedef struct
   u8 u8PinIdentifierNegInput;
   u16* u16pPortAddressPosInput;
   u8 u8PinIdentifierPosInput;
-}MotorInformation;
+}MotorInformation; //The information needed to turn a motor on and off
 
 /****************************************************************************************
 Constants

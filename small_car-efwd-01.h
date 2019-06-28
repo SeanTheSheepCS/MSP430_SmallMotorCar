@@ -8,7 +8,7 @@ YYYY-MM-DD  Comments
 2013-11-21  Port from ANT key fob.
 2019-06-05  Binary counter scoreboard first attempt
 2019-06-12  Small motor car first attempt
-
+2019-06-28  Documentation done
 ************************************************************************/
 
 #ifndef __SMALL_CAR_HEADER

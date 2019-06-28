@@ -8,7 +8,7 @@ YYYY-MM-DD  Comments
 2013-11-21  Port from ANT key fob.
 2019-06-05  Binary counter scoreboard first attempt
 2019-06-12  Small motor car first attempt
-2019-06-24  Documentation done and code finalized for the camp
+2019-06-24  Documentation done
 ************************************************************************/
 
 #include "small_car-efwd-01.h"
@@ -149,7 +149,7 @@ void CarSM_Initialize()
 } /* end CarSM_Initialize */
 
 /*----------------------------------------------------------------------------------------------------------------------
-Function: CarSM_Idle()
+State: CarSM_Idle()
 
 Description: The car should go forward until it detects something in its path, then turns around or backs up accordingly
 
@@ -157,7 +157,7 @@ Requires:
   - Car has been properly initialized
 
 Promises:
-  - Follows the behaviour outlined in the excel sheet found at:        extra_information/car_behaviour.xlsx
+  - Follows the behaviour outlined in the excel sheet found at:        extra_information/car_behaviour.xlsx (LAST UPDATED JUNE 28th 2019)
 
 */
 void CarSM_Idle()
@@ -241,43 +241,16 @@ void CarSM_Idle()
   }
 } /* end CarSM_Idle() */
 
-
-
 /*----------------------------------------------------------------------------------------------------------------------
-Function: 
+Function: IsObstaclePresent
 
-Description: 
+Description: Takes in an enum which denotes which side of the car to check and returns TRUE if the IR reciever senses an obstacle nearby
 
 Requires:
-  -
+  -sotctSideToCheckForObstacle is LEFT_SIDE, RIGHT_SIDE, or CENTER_SIDE.
 
 Promises:
-  -
-
-*/void CarSM_Sleep()
-{
-  /* Update to the current sleep interval and re-enable the timer interrupt */
-  SetTimer(u16GlobalCurrentSleepInterval);
-  TACTL = TIMERA_INT_ENABLE;
-    
-  /* Enter low power mode */
-  __bis_SR_register(CPUOFF);
-     
-  /* Wake up (timer interrupt is off now from ISR) and go to next state */
-  CarStateMachine = G_fCurrentStateMachine;
-
-} /* end CounterSM_Sleep */
-
-/*----------------------------------------------------------------------------------------------------------------------
-Function: 
-
-Description: 
-
-Requires:
-  -
-
-Promises:
-  -
+  -returns TRUE if the reciever detected an obstacle on that side and returns FALSE otherwise
 
 */
 bool IsObstaclePresent(SidesOfTheCarType sotctSideToCheckForObstacle)

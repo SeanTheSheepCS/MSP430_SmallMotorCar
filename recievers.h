@@ -6,7 +6,7 @@
 YYYY-MM-DD  Comments
 -------------------------------------------------------------------------------------------
 2019-06-12  File created
-
+2019-06-28  Documentation done
 ************************************************************************/
 
 #ifndef __RECIEVER_HEADER
@@ -22,14 +22,13 @@ typedef struct
 {
   u16* u16pPortAddress;
   u8 u8PinIdentifier;
-}RecieverInformation;
+}RecieverInformation; //The information needed to turn a reciever on and off
 
 /****************************************************************************************
 Constants
 ****************************************************************************************/
 
-#define DEBOUNCE_TIME_MS (u8)20
-#define RECIEVER_SENSITIVITY_MAX_VOLTAGE_TO_NOT_TURN (u16) 0x0360
+#define RECIEVER_SENSITIVITY_MAX_VOLTAGE_TO_NOT_TURN (u16) 0x0360 //I RECOMMEND 360. 365 is the absolute maximum sensitivity
 
 /************************ Function Declarations ****************************/
 

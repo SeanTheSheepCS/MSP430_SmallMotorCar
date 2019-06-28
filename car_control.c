@@ -6,7 +6,7 @@
 YYYY-MM-DD  Comments
 -------------------------------------------------------------------------------------------
 2019-06-12  File created
-
+2019-06-28  Documentation done
 ************************************************************************/
 
 #include "car_control.h"
@@ -20,15 +20,16 @@ YYYY-MM-DD  Comments
 /******************** Function Definitions ************************/
 
 /*----------------------------------------------------------------------------------------------------------------------
-Function: 
+Function: TurnLeftThisManyDegrees
 
-Description: 
+Description: turns left a certain number of degrees
 
 Requires:
-  -
+  - motoInfoLeftMotor and motoInfoRightMotor are the motorInformation belonging to the left and right motors
+  - CAR_TURN_RATE_MS_TO_TURN_ONE_DEGREE is accurate
 
 Promises:
-  -
+  - turns the car u8AngleToTurn degrees to the left
 
 */
 void TurnLeftThisManyDegrees(u8 u8AngleToTurn, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor)
@@ -42,15 +43,16 @@ void TurnLeftThisManyDegrees(u8 u8AngleToTurn, MotorInformation motoInfoLeftMoto
 }
 
 /*----------------------------------------------------------------------------------------------------------------------
-Function: 
+Function: TurnRightThisManyDegrees
 
-Description: 
+Description: turns right a certain number of degrees
 
 Requires:
-  -
+  - motoInfoLeftMotor and motoInfoRightMotor are the motorInformation belonging to the left and right motors
+  - CAR_TURN_RATE_MS_TO_TURN_ONE_DEGREE is accurate
 
 Promises:
-  -
+  - turns the car u8AngleToTurn degrees to the right
 
 */
 void TurnRightThisManyDegrees(u8 u8AngleToTurn, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor)
@@ -64,15 +66,16 @@ void TurnRightThisManyDegrees(u8 u8AngleToTurn, MotorInformation motoInfoLeftMot
 }
 
 /*----------------------------------------------------------------------------------------------------------------------
-Function: 
+Function: GoForwardThisManyMillimetres
 
-Description: 
+Description: Moves the car forward a certain number of millimetres
 
 Requires:
-  -
+  - motoInfoLeftMotor and motoInfoRightMotor are the motorInformation belonging to the left and right motors
+  - CAR_SPEED_MS_TO_TRAVEL_ONE_MILLIMETER is accurate
 
 Promises:
-  -
+  - moves the car u8MillimetresToGoForwards millimetres forwards
 
 */
 void GoForwardThisManyMillimetres(u8 u8MillimetresToGoForwards, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor)
@@ -86,15 +89,16 @@ void GoForwardThisManyMillimetres(u8 u8MillimetresToGoForwards, MotorInformation
 }
 
 /*----------------------------------------------------------------------------------------------------------------------
-Function: 
+Function: GoBackwardThisManyMillimetres
 
-Description: 
+Description: Moves the car backward a certain number of millimetres
 
 Requires:
-  -
+  - motoInfoLeftMotor and motoInfoRightMotor are the motorInformation belonging to the left and right motors
+  - CAR_SPEED_MS_TO_TRAVEL_ONE_MILLIMETER is accurate
 
 Promises:
-  -
+  - moves the car u8MillimetresToGoBackwards millimetres backwards
 
 */
 void GoBackwardThisManyMillimetres(u8 u8MillimetresToGoBackwards, MotorInformation motoInfoLeftMotor, MotorInformation motoInfoRightMotor)
@@ -108,15 +112,15 @@ void GoBackwardThisManyMillimetres(u8 u8MillimetresToGoBackwards, MotorInformati
 }
 
 /*----------------------------------------------------------------------------------------------------------------------
-Function: 
+Function: MotorOn
 
-Description: 
+Description: turns a motor in the mode where the wheel spins forwards
 
 Requires:
-  -
+  - motorToTurnOn is valid motorInformation
 
 Promises:
-  -
+  - turns motorToTurnOn in the mode where the wheel spins forwards
 
 */
 void MotorOn(MotorInformation motorToTurnOn)
@@ -126,15 +130,15 @@ void MotorOn(MotorInformation motorToTurnOn)
 }
 
 /*----------------------------------------------------------------------------------------------------------------------
-Function: 
+Function: MotorOff
 
-Description: 
+Description: turns a motor in the mode where the wheel does not spin
 
 Requires:
-  -
+  - motorToTurnOff is valid motorInformation
 
 Promises:
-  -
+  - turns motorToTurnOff in the mode where the wheel does not spin
 
 */
 void MotorOff(MotorInformation motorToTurnOff)
@@ -144,15 +148,15 @@ void MotorOff(MotorInformation motorToTurnOff)
 }
 
 /*----------------------------------------------------------------------------------------------------------------------
-Function: 
+Function: MotorReverse
 
-Description: 
+Description: turns a motor in the mode where the wheel spins backwards
 
 Requires:
-  -
+  - motorToReverse is valid motorInformation
 
 Promises:
-  -
+  - turns motorToReverse in the mode where the wheel spins backwards
 
 */
 void MotorReverse(MotorInformation motorToReverse)
