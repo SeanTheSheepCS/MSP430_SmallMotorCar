@@ -49,10 +49,21 @@ LedInformation* LG_pLedInfoCenterLedGreen = &(LG_aLedInfoLeds[2]);
 LedInformation* LG_pLedInfoCenterLedBlue = &(LG_aLedInfoLeds[3]);
 LedInformation* LG_pLedInfoHeadlights = &(LG_aLedInfoLeds[4]);
 
+//Simpler names for the campers
+#define CENTER_LED_RED *LG_pLedInfoCenterLedRed
+#define CENTER_LED_GREEN *LG_pLedInfoCenterLedGreen
+#define CENTER_LED_BLUE *LG_pLedInfoCenterLedBlue
+#define HEADLIGHTS *LG_pLedInfoHeadlights
+#define TAILLIGHTS *LG_pLedInfoTaillights
+
 MotorInformation LG_aMInfoMotors[NUMBER_OF_MOTORS] = {{(u16*)0x0021, P1_1_LEFT_MOTOR_NEG_INPUT, (u16*)0x0021, P1_2_LEFT_MOTOR_POS_INPUT},
                                                       {(u16*)0x0029, P2_4_RIGHT_MOTOR_NEG_INPUT, (u16*)0x0021, P1_0_RIGHT_MOTOR_POS_INPUT}};
 MotorInformation* LG_pMInfoLeftMotor = &(LG_aMInfoMotors[0]);
 MotorInformation* LG_pMInfoRightMotor = &(LG_aMInfoMotors[1]);
+
+//Simpler names for the campers
+#define LEFT_MOTOR *LG_pMInfoLeftMotor
+#define RIGHT_MOTOR *LG_pMInfoRightMotor
 
 RecieverInformation LG_aRInfoRecievers[NUMBER_OF_RECIEVERS] = {{(u16*)0x0029, P2_3_LEFT_RECIEVER_SIGNAL},
                                                                {(u16*)0x0019, P3_6_RIGHT_RECIEVER_SIGNAL},
@@ -193,83 +204,27 @@ Promises:
 */
 void CarSM_Idle()
 {
-  bool boolObstaclePresentCenterSide = IsObstaclePresent(CENTER_SIDE);
-  bool boolObstaclePresentRightSide = IsObstaclePresent(RIGHT_SIDE);
-  bool boolObstaclePresentLeftSide = IsObstaclePresent(LEFT_SIDE);
+  bool bObstaclePresentCenterSide = IsObstaclePresent(CENTER_SIDE);
+  bool bObstaclePresentRightSide = IsObstaclePresent(RIGHT_SIDE);
+  bool bObstaclePresentLeftSide = IsObstaclePresent(LEFT_SIDE);
     
-  LedOn(*LG_pLedInfoHeadlights);
-  MotorOn(*LG_pMInfoLeftMotor);
-  MotorOn(*LG_pMInfoRightMotor);
-    
-  if(!(boolObstaclePresentCenterSide) && !(boolObstaclePresentRightSide) && !(boolObstaclePresentLeftSide))
+  LedOn(HEADLIGHTS);
+  MotorOn(LEFT_MOTOR);
+  MotorOn(RIGHT_MOTOR);
+  
+  if(!(bObstaclePresentCenterSide) && !(bObstaclePresentRightSide) && !(bObstaclePresentLeftSide))
   {
     WaitThisManyMilliseconds(10);
   }
-  else if(!(boolObstaclePresentCenterSide) && !(boolObstaclePresentRightSide) &&  (boolObstaclePresentLeftSide))
+  else
   {
-    LedOff(*LG_pLedInfoHeadlights);
-    TurnRightThisManyDegrees(45, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
+    LedOff(HEADLIGHTS);
+    LedOn(TAILLIGHTS);
+    GoBackwardThisManyMillimetres(50, LEFT_MOTOR, RIGHT_MOTOR);
+    LedOff(TAILLIGHTS);
+    TurnLeftThisManyDegrees(180, LEFT_MOTOR, RIGHT_MOTOR);
   }
-  else if(!(boolObstaclePresentCenterSide) &&  (boolObstaclePresentRightSide) && !(boolObstaclePresentLeftSide))
-  {
-    LedOff(*LG_pLedInfoHeadlights);
-    TurnLeftThisManyDegrees(45, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
-  }
-  else if(!(boolObstaclePresentCenterSide) &&  (boolObstaclePresentRightSide) &&  (boolObstaclePresentLeftSide))
-  {
-    LedOff(*LG_pLedInfoHeadlights);
-    LedOn(*LG_pLedInfoTaillights);
-    GoBackwardThisManyMillimetres(50, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
-    LedOff(*LG_pLedInfoTaillights);
-    if(GenerateRandomishNumberOneOrZero() == 1)
-    {
-      TurnLeftThisManyDegrees(45, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
-    }
-    else
-    {
-      TurnRightThisManyDegrees(45, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
-    }
-  }
-  else if( (boolObstaclePresentCenterSide) && !(boolObstaclePresentRightSide) && !(boolObstaclePresentLeftSide))
-  {
-    LedOff(*LG_pLedInfoHeadlights);
-    LedOn(*LG_pLedInfoTaillights);
-    GoBackwardThisManyMillimetres(50, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
-    LedOff(*LG_pLedInfoTaillights);
-    if(GenerateRandomishNumberOneOrZero() == 1)
-    {
-      TurnLeftThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
-    }
-    else
-    {
-      TurnRightThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
-    }
-  }
-  else if( (boolObstaclePresentCenterSide) && !(boolObstaclePresentRightSide) &&  (boolObstaclePresentLeftSide))
-  {
-    LedOff(*LG_pLedInfoHeadlights);
-    TurnRightThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
-  }
-  else if( (boolObstaclePresentCenterSide) &&  (boolObstaclePresentRightSide) && !(boolObstaclePresentLeftSide))
-  {
-    LedOff(*LG_pLedInfoHeadlights);
-    TurnLeftThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
-  }
-  else if( (boolObstaclePresentCenterSide) &&  (boolObstaclePresentRightSide) &&  (boolObstaclePresentLeftSide))
-  {
-    LedOff(*LG_pLedInfoHeadlights);
-    LedOn(*LG_pLedInfoTaillights);
-    GoBackwardThisManyMillimetres(50, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
-    LedOff(*LG_pLedInfoTaillights);
-    if(GenerateRandomishNumberOneOrZero() == 1)
-    {
-      TurnLeftThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
-    }
-    else
-    {
-      TurnRightThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
-    }
-  }
+  
 } /* end CarSM_Idle() */
 
 /*----------------------------------------------------------------------------------------------------------------------
