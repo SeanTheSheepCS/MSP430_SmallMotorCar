@@ -24,7 +24,7 @@
         <Counter1>0000000000000000000000000000000000000000000000000000000000000000</Counter1>
     </EEM_Cycle_Counter_1>
     <DebugChecksum>
-        <Checksum>1492026059</Checksum>
+        <Checksum>1258761659</Checksum>
     </DebugChecksum>
     <CallStack>
         <ShowArgs>0</ShowArgs>
@@ -42,8 +42,8 @@
         <LogFile>_ ""</LogFile>
     </TermIOLog>
     <Breakpoints>
-        <Bp0>_ "STD_CODE" "{$PROJ_DIR$\..\main.c}.81.3" 0 0 0 0 "" 0 ""</Bp0>
-        <Bp1>_ "STD_CODE" "{$PROJ_DIR$\..\main.c}.81.3" 0 0 0 0 "" 0 ""</Bp1>
+        <Bp0>_ "STD_CODE" "{$PROJ_DIR$\..\main.c}.73.3" 0 0 0 0 "" 0 ""</Bp0>
+        <Bp1>_ "STD_CODE" "{$PROJ_DIR$\..\main.c}.73.3" 0 0 0 0 "" 0 ""</Bp1>
         <Count>2</Count>
     </Breakpoints>
     <FET>

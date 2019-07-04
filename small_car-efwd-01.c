@@ -101,7 +101,7 @@ State Machine Functions
 /*----------------------------------------------------------------------------------------------------------------------
 Function: CarSM_Initialize()
 
-Description: Sets the direction on all of the pins, turns all the LEDS off, and sets the car to an idle state
+Description: Sets the direction on all of the pins and selects them as I/O, turns all the LEDS off, and sets the car to an idle state
 
 Requires:
   - N/A
@@ -117,26 +117,57 @@ void CarSM_Initialize()
   /* Reset key variables */
   u16GlobalCurrentSleepInterval = TIME_MAX;
   
-  P1DIR |= P1_0_RIGHT_MOTOR_POS_INPUT;
+  P1DIR |= P1_0_RIGHT_MOTOR_POS_INPUT; //Sets the pin as an output
+  P1SEL2 &= ~P1_0_RIGHT_MOTOR_POS_INPUT; //Selects the I/O function
+  P1SEL &= ~P1_0_RIGHT_MOTOR_POS_INPUT; //Also needed to select the I/O function
   P1DIR |= P1_1_LEFT_MOTOR_NEG_INPUT;
+  P1SEL2 &= ~P1_1_LEFT_MOTOR_NEG_INPUT;
+  P1SEL &= ~P1_1_LEFT_MOTOR_NEG_INPUT;
   P1DIR |= P1_2_LEFT_MOTOR_POS_INPUT;
+  P1SEL2 &= ~P1_2_LEFT_MOTOR_POS_INPUT;
+  P1SEL &= ~P1_2_LEFT_MOTOR_POS_INPUT;
   P1DIR |= P1_3_BUZZER;
+  P1SEL2 &= ~P1_3_BUZZER;
+  P1SEL &= ~P1_3_BUZZER;
   
   P2DIR |= P2_0_CENTER_EMITTER;
+  P2SEL2 &= ~P2_0_CENTER_EMITTER;
+  P2SEL &= ~P2_0_CENTER_EMITTER;
   P2DIR |= P2_1_LEFT_EMITTER;
+  P2SEL2 &= ~P2_1_LEFT_EMITTER;
+  P2SEL &= ~P2_1_LEFT_EMITTER;
   P2DIR |= P2_2_CENTER_LED_RED_INPUT;
-  P2DIR &= ~P2_3_LEFT_RECIEVER_SIGNAL;
+  P2SEL2 &= ~P2_2_CENTER_LED_RED_INPUT;
+  P2SEL &= ~P2_2_CENTER_LED_RED_INPUT;
+  P2DIR &= ~P2_3_LEFT_RECIEVER_SIGNAL; //Sets the pin as an input
+  P2SEL2 &= ~P2_3_LEFT_RECIEVER_SIGNAL;
+  P2SEL &= ~P2_3_LEFT_RECIEVER_SIGNAL;
   P2DIR |= P2_4_RIGHT_MOTOR_NEG_INPUT;
+  P2SEL2 &= ~P2_4_RIGHT_MOTOR_NEG_INPUT;
+  P2SEL &= ~P2_4_RIGHT_MOTOR_NEG_INPUT;
   P2DIR |= P2_5_TAILLIGHTS_LEDS;
+  P2SEL2 &= ~P2_5_TAILLIGHTS_LEDS;
+  P2SEL &= ~P2_5_TAILLIGHTS_LEDS;
   P2DIR |= P2_6_EXTRA_INPUT_ONE;
+  P2SEL2 &= ~P2_6_EXTRA_INPUT_ONE;
+  P2SEL &= ~P2_6_EXTRA_INPUT_ONE;
   P2DIR |= P2_7_EXTRA_INPUT_TWO;
+  P2SEL2 &= ~P2_7_EXTRA_INPUT_TWO;
+  P2SEL &= ~P2_7_EXTRA_INPUT_TWO;
   
+  //P3SEL2 is not set here since port 3 only has one select register
   P3DIR |= P3_0_CENTER_LED_GREEN_INPUT;
+  P3SEL &= ~P3_0_CENTER_LED_GREEN_INPUT;
   P3DIR |= P3_1_CENTER_LED_BLUE_INPUT;
+  P3SEL &= ~P3_1_CENTER_LED_BLUE_INPUT;
   P3DIR |= P3_2_HEADLIGHTS_LEDS;
+  P3SEL &= ~P3_2_HEADLIGHTS_LEDS;
   P3DIR |= P3_3_RIGHT_EMITTER;
+  P3SEL &= ~P3_3_RIGHT_EMITTER;
   P3DIR &= ~P3_6_RIGHT_RECIEVER_SIGNAL;
+  P3SEL &= ~P3_6_RIGHT_RECIEVER_SIGNAL;
   P3DIR &= ~P3_7_CENTER_RECIEVER_SIGNAL;
+  P3SEL &= ~P3_7_CENTER_RECIEVER_SIGNAL;
   
   LedOff(*LG_pLedInfoCenterLedRed);
   LedOff(*LG_pLedInfoCenterLedGreen);
