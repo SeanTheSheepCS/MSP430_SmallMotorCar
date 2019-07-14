@@ -28,7 +28,7 @@ YYYY-MM-DD  Comments
 /******************** Program Globals ************************/
 /* Global variable definitions intended for scope across multiple files */
 fnCode_type CarStateMachine = CarSM_Initialize;   /* The application state machine */
-fnCode_type G_fCurrentStateMachine = CarSM_Idle;  
+fnCode_type G_fCurrentStateMachine = CarSM_Idle;
 
 volatile u16 u16GlobalRuntimeFlags = 0;               /* Flag register for communicating various runtime events. */
 volatile u16 u16GlobalErrorFlags = 0;                 /* Flag register for communicating errors. */
@@ -65,9 +65,9 @@ MotorInformation* LG_pMInfoRightMotor = &(LG_aMInfoMotors[1]);
 #define LEFT_MOTOR *LG_pMInfoLeftMotor
 #define RIGHT_MOTOR *LG_pMInfoRightMotor
 
-RecieverInformation LG_aRInfoRecievers[NUMBER_OF_RECIEVERS] = {{(u16*)0x0029, P2_3_LEFT_RECIEVER_SIGNAL},
-                                                               {(u16*)0x0019, P3_6_RIGHT_RECIEVER_SIGNAL},
-                                                               {(u16*)0x0019, P3_7_CENTER_RECIEVER_SIGNAL}};
+RecieverInformation LG_aRInfoRecievers[NUMBER_OF_RECIEVERS] = {{(u16*)0x0029, P2_3_LEFT_RECIEVER_SIGNAL, 0x0360},
+                                                               {(u16*)0x0019, P3_6_RIGHT_RECIEVER_SIGNAL, 0x0360},
+                                                               {(u16*)0x0019, P3_7_CENTER_RECIEVER_SIGNAL, 0x0360}};
 RecieverInformation* LG_pRInfoLeftReciever = &(LG_aRInfoRecievers[0]);
 RecieverInformation* LG_pRInfoRightReciever = &(LG_aRInfoRecievers[1]);
 RecieverInformation* LG_pRInfoCenterReciever = &(LG_aRInfoRecievers[2]);
@@ -80,13 +80,13 @@ EmitterInformation* pLG_pEInfoLeftEmitter = &(LG_aEInfoEmitters[1]);
 EmitterInformation* pLG_pEInfoRightEmitter = &(LG_aEInfoEmitters[2]);
 
 /******************** Function Definitions ************************/
- 
+
 /*------------------------------------------------------------------------------
 Function: SetTimer
 
 Description:
 Sets the TACCRO register, clears timer and clear the interrupt flag.
- 
+
 Requires:
   - usTaccr0_ is the value to which TACCRO will be set, where the time before interrupt in seconds
     is usTaccr0_ * (8/32768).  e.g. TACCRO = 12288 is a 3000ms delay.
@@ -100,9 +100,9 @@ void SetTimer(u16 usTaccr0_)
 /* Sets the TACCRO register, clears timer and the interrupt flag */
 {
   TAR = 0;
-	TACCR0 = usTaccr0_;	
-	TACTL &= ~TAIFG; 
-  
+	TACCR0 = usTaccr0_;
+	TACTL &= ~TAIFG;
+
 } /* end SetTimer */
 
 /****************************************************************************************
@@ -127,7 +127,7 @@ void CarSM_Initialize()
 {
   /* Reset key variables */
   u16GlobalCurrentSleepInterval = TIME_MAX;
-  
+
   P1DIR |= P1_0_RIGHT_MOTOR_POS_INPUT; //Sets the pin as an output
   P1SEL2 &= ~P1_0_RIGHT_MOTOR_POS_INPUT; //Selects the I/O function
   P1SEL &= ~P1_0_RIGHT_MOTOR_POS_INPUT; //Also needed to select the I/O function
@@ -140,7 +140,7 @@ void CarSM_Initialize()
   P1DIR |= P1_3_BUZZER;
   P1SEL2 &= ~P1_3_BUZZER;
   P1SEL &= ~P1_3_BUZZER;
-  
+
   P2DIR |= P2_0_CENTER_EMITTER;
   P2SEL2 &= ~P2_0_CENTER_EMITTER;
   P2SEL &= ~P2_0_CENTER_EMITTER;
@@ -165,7 +165,7 @@ void CarSM_Initialize()
   P2DIR |= P2_7_EXTRA_INPUT_TWO;
   P2SEL2 &= ~P2_7_EXTRA_INPUT_TWO;
   P2SEL &= ~P2_7_EXTRA_INPUT_TWO;
-  
+
   //P3SEL2 is not set here since port 3 only has one select register
   P3DIR |= P3_0_CENTER_LED_GREEN_INPUT;
   P3SEL &= ~P3_0_CENTER_LED_GREEN_INPUT;
@@ -179,15 +179,15 @@ void CarSM_Initialize()
   P3SEL &= ~P3_6_RIGHT_RECIEVER_SIGNAL;
   P3DIR &= ~P3_7_CENTER_RECIEVER_SIGNAL;
   P3SEL &= ~P3_7_CENTER_RECIEVER_SIGNAL;
-  
+
   LedOff(*LG_pLedInfoCenterLedRed);
   LedOff(*LG_pLedInfoCenterLedGreen);
   LedOff(*LG_pLedInfoCenterLedBlue);
   LedOff(*LG_pLedInfoTaillights);
   LedOff(*LG_pLedInfoHeadlights);
-  
+
   CarStateMachine = CarSM_Idle;
-  
+
 } /* end CarSM_Initialize */
 
 /*----------------------------------------------------------------------------------------------------------------------
@@ -207,24 +207,20 @@ void CarSM_Idle()
   bool bObstaclePresentCenterSide = IsObstaclePresent(CENTER_SIDE);
   bool bObstaclePresentRightSide = IsObstaclePresent(RIGHT_SIDE);
   bool bObstaclePresentLeftSide = IsObstaclePresent(LEFT_SIDE);
-    
+
   LedOn(HEADLIGHTS);
   MotorOn(LEFT_MOTOR);
   MotorOn(RIGHT_MOTOR);
-  
+
   if(!(bObstaclePresentCenterSide) && !(bObstaclePresentRightSide) && !(bObstaclePresentLeftSide))
   {
     WaitThisManyMilliseconds(10);
   }
   else
   {
-    LedOff(HEADLIGHTS);
-    LedOn(TAILLIGHTS);
-    GoBackwardThisManyMillimetres(50, LEFT_MOTOR, RIGHT_MOTOR);
-    LedOff(TAILLIGHTS);
-    TurnLeftThisManyDegrees(180, LEFT_MOTOR, RIGHT_MOTOR);
+
   }
-  
+
 } /* end CarSM_Idle() */
 
 /*----------------------------------------------------------------------------------------------------------------------
