@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "C:\Program Files (x86)\IAR Systems\EWMSP_7_12_1\common\bin\cspybat" -f "C:\Users\ENGENUICS5\Desktop\2019_camps\Sean Kenny\Coding the Sensor Car\MSP430_SmallMotorCar\IAR_7_12_1\settings\blink-efwd.Debug.general.xcl" --backend -f "C:\Users\ENGENUICS5\Desktop\2019_camps\Sean Kenny\Coding the Sensor Car\MSP430_SmallMotorCar\IAR_7_12_1\settings\blink-efwd.Debug.driver.xcl" 
+& "D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Users\seank\OneDrive\Desktop\Everything\Engenuics\2019_camps\Common\CampContent_Programming\ProgrammingCamp_SensorCar\ProgrammingCamp_SensorCar_StudentResources\MSP430_SmallMotorCar\IAR_7_12_1\settings\blink-efwd.Debug.general.xcl" --backend -f "C:\Users\seank\OneDrive\Desktop\Everything\Engenuics\2019_camps\Common\CampContent_Programming\ProgrammingCamp_SensorCar\ProgrammingCamp_SensorCar_StudentResources\MSP430_SmallMotorCar\IAR_7_12_1\settings\blink-efwd.Debug.driver.xcl" 
 }
 else
 {
-& "C:\Program Files (x86)\IAR Systems\EWMSP_7_12_1\common\bin\cspybat" -f "C:\Users\ENGENUICS5\Desktop\2019_camps\Sean Kenny\Coding the Sensor Car\MSP430_SmallMotorCar\IAR_7_12_1\settings\blink-efwd.Debug.general.xcl" --debug_file=$debugfile --backend -f "C:\Users\ENGENUICS5\Desktop\2019_camps\Sean Kenny\Coding the Sensor Car\MSP430_SmallMotorCar\IAR_7_12_1\settings\blink-efwd.Debug.driver.xcl" 
+& "D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Users\seank\OneDrive\Desktop\Everything\Engenuics\2019_camps\Common\CampContent_Programming\ProgrammingCamp_SensorCar\ProgrammingCamp_SensorCar_StudentResources\MSP430_SmallMotorCar\IAR_7_12_1\settings\blink-efwd.Debug.general.xcl" --debug_file=$debugfile --backend -f "C:\Users\seank\OneDrive\Desktop\Everything\Engenuics\2019_camps\Common\CampContent_Programming\ProgrammingCamp_SensorCar\ProgrammingCamp_SensorCar_StudentResources\MSP430_SmallMotorCar\IAR_7_12_1\settings\blink-efwd.Debug.driver.xcl" 
 }
