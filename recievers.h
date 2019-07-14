@@ -22,13 +22,17 @@ typedef struct
 {
   u16* u16pPortAddress;
   u8 u8PinIdentifier;
+  u16 u16TurnVoltageThreshold; /* If the analog voltage read and put into ADC10MEM is above whatever number is here, the car will decide there is no obstacle in the way.
+                                * If the analog voltage read and put into ADC10MEM is under whatever number is here, the car will decide there is an obstacle in the way.
+                                * Reasonable values to test are anywhere from 0x0350 to 0x03B0. 0x0350 is not very sensitive, 0x03B0 should be very sensitive.
+                                */
+
 }RecieverInformation; //The information needed to turn a reciever on and off
 
 /****************************************************************************************
 Constants
 ****************************************************************************************/
 
-#define RECIEVER_SENSITIVITY_MAX_VOLTAGE_TO_NOT_TURN (u16) 0x0360 //I RECOMMEND 360. 365 is the absolute maximum sensitivity
 
 /************************ Function Declarations ****************************/
 

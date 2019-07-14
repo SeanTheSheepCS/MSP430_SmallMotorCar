@@ -244,7 +244,7 @@
             <inputs>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 69 71 60 72 50 48 57 63 19 64</file>
+                    <file> 69 72 71 60 50 48 57 63 19 64</file>
                 </tool>
                 <tool>
                     <name>ICC430</name>

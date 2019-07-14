@@ -1,10 +1,10 @@
-"C:\Program Files (x86)\IAR Systems\EWMSP_7_12_1\430\bin\430proc.dll" 
+"D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\430\bin\430proc.dll" 
 
-"C:\Program Files (x86)\IAR Systems\EWMSP_7_12_1\430\bin\430fet.dll" 
+"D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\430\bin\430fet.dll" 
 
-"C:\Users\ENGENUICS5\Desktop\2019_camps\Sean Kenny\Coding the Sensor Car\MSP430_SmallMotorCar\IAR_7_12_1\Debug\Exe\blink-efwd.d43" 
+"C:\Users\seank\OneDrive\Desktop\Everything\Engenuics\2019_camps\Common\CampContent_Programming\ProgrammingCamp_SensorCar\ProgrammingCamp_SensorCar_StudentResources\MSP430_SmallMotorCar\IAR_7_12_1\Debug\Exe\blink-efwd.d43" 
 
---plugin "C:\Program Files (x86)\IAR Systems\EWMSP_7_12_1\430\bin\430bat.dll" 
+--plugin "D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\430\bin\430bat.dll" 
 
 
 
