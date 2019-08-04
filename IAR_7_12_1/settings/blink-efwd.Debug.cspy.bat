@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Users\seank\OneDrive\Desktop\Everything\Engenuics\2019_camps\Common\CampContent_Programming\ProgrammingCamp_SensorCar\ProgrammingCamp_SensorCar_StudentResources\MSP430_SmallMotorCar\IAR_7_12_1\settings\blink-efwd.Debug.general.xcl" --backend -f "C:\Users\seank\OneDrive\Desktop\Everything\Engenuics\2019_camps\Common\CampContent_Programming\ProgrammingCamp_SensorCar\ProgrammingCamp_SensorCar_StudentResources\MSP430_SmallMotorCar\IAR_7_12_1\settings\blink-efwd.Debug.driver.xcl" 
+"D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Users\seank\OneDrive\Desktop\Everything\Engenuics\2019_camps\Common\CampContent_Programming\ProgrammingCamp_SensorCar\ProgrammingCamp_SensorCar_TeacherResources\MSP430_SmallMotorCar\IAR_7_12_1\settings\blink-efwd.Debug.general.xcl" --backend -f "C:\Users\seank\OneDrive\Desktop\Everything\Engenuics\2019_camps\Common\CampContent_Programming\ProgrammingCamp_SensorCar\ProgrammingCamp_SensorCar_TeacherResources\MSP430_SmallMotorCar\IAR_7_12_1\settings\blink-efwd.Debug.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Users\seank\OneDrive\Desktop\Everything\Engenuics\2019_camps\Common\CampContent_Programming\ProgrammingCamp_SensorCar\ProgrammingCamp_SensorCar_StudentResources\MSP430_SmallMotorCar\IAR_7_12_1\settings\blink-efwd.Debug.general.xcl" "--debug_file=%~1" --backend -f "C:\Users\seank\OneDrive\Desktop\Everything\Engenuics\2019_camps\Common\CampContent_Programming\ProgrammingCamp_SensorCar\ProgrammingCamp_SensorCar_StudentResources\MSP430_SmallMotorCar\IAR_7_12_1\settings\blink-efwd.Debug.driver.xcl" 
+"D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Users\seank\OneDrive\Desktop\Everything\Engenuics\2019_camps\Common\CampContent_Programming\ProgrammingCamp_SensorCar\ProgrammingCamp_SensorCar_TeacherResources\MSP430_SmallMotorCar\IAR_7_12_1\settings\blink-efwd.Debug.general.xcl" "--debug_file=%~1" --backend -f "C:\Users\seank\OneDrive\Desktop\Everything\Engenuics\2019_camps\Common\CampContent_Programming\ProgrammingCamp_SensorCar\ProgrammingCamp_SensorCar_TeacherResources\MSP430_SmallMotorCar\IAR_7_12_1\settings\blink-efwd.Debug.driver.xcl" 
 
 @echo off 
 :end

@@ -42,5 +42,5 @@ Promises:
 */
 void TurnOffEmitter(EmitterInformation eInfoEmitter)
 {
-  *(eInfoEmitter.u16pPortAddress) |= eInfoEmitter.u8EmitterIdentifier;
+  *(eInfoEmitter.u16pPortAddress) &= ~eInfoEmitter.u8EmitterIdentifier;
 }
