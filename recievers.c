@@ -30,11 +30,13 @@ bool hasRecieverDetectedAWall(RecieverInformation rInfoReciever)
 {
   if(rInfoReciever.u16pPortAddress == (u16*)0x0021)  /* If the reciever belongs to port one... */
   {
-    P1SEL |= rInfoReciever.u8PinIdentifier;
-    ADC10CTL1 = INCH_3 + ADC10DIV_3;
-    ADC10CTL0 = ADC10ON + ADC10IE + SREF_0 + ADC10SHT_3;  // Turns the control on, enables interrupts
+    P1SEL &= ~rInfoReciever.u8PinIdentifier; //Make sure his pin is on I/O function
+    P1SEL2 &= ~rInfoReciever.u8PinIdentifier; //Make sure his pin is on I/O function
+    ADC10CTL1 = INCH_3 | ADC10DIV_3;
+    ADC10CTL0 = ADC10ON | SREF_0 | ADC10SHT_3;  // Turns ADC on. Does not enable interrupts, add a "| ADC10IE" at the end if you want that for whatever reason. ADC10SHT is the sample and hold time.
     ADC10AE0 |= rInfoReciever.u8PinIdentifier;
-    ADC10CTL0 |= ENC + ADC10SC;
+    ADC10CTL0 |= ENC | ADC10SC; //Starts the conversion
+    while(ADC10CTL1 | ADC10BUSY); //Wait until the ADC10 is no longer busy
     if(ADC10MEM < rInfoReciever.u16TurnVoltageThreshold)
     {
       return TRUE;
@@ -42,11 +44,13 @@ bool hasRecieverDetectedAWall(RecieverInformation rInfoReciever)
   }
   else if(rInfoReciever.u16pPortAddress == (u16*)0x0029)  /* If the reciever belongs to port two... */
   {
-    P2SEL |= rInfoReciever.u8PinIdentifier;
-    ADC10CTL1 = INCH_3 + ADC10DIV_3;
-    ADC10CTL0 = ADC10ON + ADC10IE + SREF_0 + ADC10SHT_3;  // Turns the control on, enables interrupts
+    P2SEL &= ~rInfoReciever.u8PinIdentifier; //Make sure his pin is on I/O function
+    P2SEL2 &= ~rInfoReciever.u8PinIdentifier; //Make sure his pin is on I/O function
+    ADC10CTL1 = INCH_3 | ADC10DIV_3;
+    ADC10CTL0 = ADC10ON | SREF_0 | ADC10SHT_3;  // Turns ADC on. Does not enable interrupts, add a "& ADC10IE" at the end if you want that for whatever reason. ADC10SHT is the sample and hold time.
     ADC10AE0 |= rInfoReciever.u8PinIdentifier;
-    ADC10CTL0 |= ENC + ADC10SC;
+    ADC10CTL0 |= ENC | ADC10SC; //Starts the conversion
+    while(ADC10CTL1 & ADC10BUSY); //Wait until the ADC10 is no longer busy
     if(ADC10MEM < rInfoReciever.u16TurnVoltageThreshold)
     {
       return TRUE;
@@ -54,11 +58,12 @@ bool hasRecieverDetectedAWall(RecieverInformation rInfoReciever)
   }
   else if(rInfoReciever.u16pPortAddress == (u16*)0x0019)  /* If the reciever belongs to port three... */
   {
-    P3SEL |= rInfoReciever.u8PinIdentifier;
-    ADC10CTL1 = INCH_3 + ADC10DIV_3;
-    ADC10CTL0 = ADC10ON + ADC10IE + SREF_0 + ADC10SHT_3;  // Turns the control on, enables interrupts
+    P3SEL &= ~rInfoReciever.u8PinIdentifier; //Make sure his pin is on I/O function
+    ADC10CTL1 = INCH_6 | ADC10DIV_3;
+    ADC10CTL0 = ADC10ON | SREF_0 | ADC10SHT_3;  // Turns the control on. Does not enable interrupts, add a "| ADC10IE" at the end if you want that for whatever reason. ADC10SHT is the sample and hold time.
     ADC10AE0 |= rInfoReciever.u8PinIdentifier;
-    ADC10CTL0 |= ENC + ADC10SC;
+    ADC10CTL0 |= ENC | ADC10SC; //Starts the conversion
+    while(ADC10CTL1 & ADC10BUSY); //Wait until the ADC10 is no longer busy
     if(ADC10MEM < rInfoReciever.u16TurnVoltageThreshold)
     {
       return TRUE;

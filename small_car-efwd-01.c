@@ -55,7 +55,7 @@ MotorInformation* LG_pMInfoLeftMotor = &(LG_aMInfoMotors[0]);
 MotorInformation* LG_pMInfoRightMotor = &(LG_aMInfoMotors[1]);
 
 RecieverInformation LG_aRInfoRecievers[NUMBER_OF_RECIEVERS] = {{(u16*)0x0029, P2_3_LEFT_RECIEVER_SIGNAL, 0x0360},
-                                                               {(u16*)0x0019, P3_6_RIGHT_RECIEVER_SIGNAL, 0x0360},
+                                                               {(u16*)0x0019, P3_6_RIGHT_RECIEVER_SIGNAL, 0x0330},
                                                                {(u16*)0x0019, P3_7_CENTER_RECIEVER_SIGNAL, 0x0360}};
 RecieverInformation* LG_pRInfoLeftReciever = &(LG_aRInfoRecievers[0]);
 RecieverInformation* LG_pRInfoRightReciever = &(LG_aRInfoRecievers[1]);
@@ -201,6 +201,33 @@ void CarSM_Idle()
   MotorOn(*LG_pMInfoLeftMotor);
   MotorOn(*LG_pMInfoRightMotor);
 
+  if(boolObstaclePresentCenterSide)
+  {
+    LedOn(*LG_pLedInfoCenterLedRed);
+  }
+  else
+  {
+    LedOff(*LG_pLedInfoCenterLedRed);
+  }
+
+  if(boolObstaclePresentRightSide)
+  {
+    LedOn(*LG_pLedInfoCenterLedBlue);
+  }
+  else
+  {
+    LedOff(*LG_pLedInfoCenterLedBlue);
+  }
+
+  if(boolObstaclePresentLeftSide)
+  {
+    LedOn(*LG_pLedInfoCenterLedGreen);
+  }
+  else
+  {
+    LedOff(*LG_pLedInfoCenterLedGreen);
+  }
+
   if(!(boolObstaclePresentCenterSide) && !(boolObstaclePresentRightSide) && !(boolObstaclePresentLeftSide))
   {
     WaitThisManyMilliseconds(10);
@@ -270,6 +297,7 @@ void CarSM_Idle()
       TurnRightThisManyDegrees(90, *LG_pMInfoLeftMotor, *LG_pMInfoRightMotor);
     }
   }
+
 } /* end CarSM_Idle() */
 
 /*----------------------------------------------------------------------------------------------------------------------
