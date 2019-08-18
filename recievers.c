@@ -42,7 +42,7 @@ bool hasRecieverDetectedAWall(RecieverInformation rInfoReciever)
   else if(rInfoReciever.u16pPortAddress == (u16*)0x0019)  /* If the reciever belongs to port three... */
   {
     P3SEL |= rInfoReciever.u8PinIdentifier;
-    ADC10CTL1 = INCH_3 + ADC10DIV_3;
+    ADC10CTL1 = INCH_7 + ADC10DIV_3;
     ADC10CTL0 = ADC10ON + ADC10IE + SREF_0 + ADC10SHT_3;  // Turns the control on, enables interrupts
     ADC10AE0 |= rInfoReciever.u8PinIdentifier;
     ADC10CTL0 |= ENC + ADC10SC;
